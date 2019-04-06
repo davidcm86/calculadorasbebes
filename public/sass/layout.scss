@@ -7,3 +7,7 @@ $bdc-base: #465f78;
 $bgc-body: #2c3e50;
 $c-button-outlined: #fff;
 @import '../node_modules/sierra-library/lib/index';
+// quitamos la flecha que pone el sierra en el selector
+.select::after, .select::before {
+    background: transparent;
+}

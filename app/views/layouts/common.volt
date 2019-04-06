@@ -2,7 +2,7 @@
     <head>
         <title>{{ t._('titulo-pagina') }} - An example blog</title>
         {{ assets.outputCss('localCss') }}
-        <link rel="alternate" href="<?php echo DOMINIO . '/' . $lang; ?>" hreflang="<?php echo $language; ?>" />
+        <link rel="alternate" href="{{ dominioPhp }}/{{ lang }}" hreflang="{{ language }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -16,4 +16,5 @@
             {% include 'partials/footer.volt' %}
         </div>
     </body>
+    {{ assets.outputJs() }}
 </html>

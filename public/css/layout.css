@@ -2397,5 +2397,8 @@ input:-webkit-autofill {
     margin-left: 91.6666666667%;
   }
 }
+.select::after, .select::before {
+  background: transparent;
+}
 
 /*# sourceMappingURL=layout.css.map */
