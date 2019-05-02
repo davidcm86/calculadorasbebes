@@ -7,7 +7,9 @@ use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter;
 use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
-
+use Phalcon\Mvc\Model\Manager as ModelsManager;
+use Phalcon\Logger;
+use Phalcon\Logger\Adapter\File as LogFileAdapter;
 
 /**
  * Shared configuration service
@@ -40,15 +42,12 @@ $di->setShared('view', function () {
     $view->registerEngines([
         '.volt' => function ($view) {
             $config = $this->getConfig();
-
             $volt = new VoltEngine($view, $this);
-
             $volt->setOptions([
                 'compiledPath' => $config->application->cacheDir,
                 'compiledSeparator' => '_',
                 'compileAlways' => (ENVIRONMENT == 'development' ? true : false)
             ]);
-
             return $volt;
         },
         '.phtml' => PhpEngine::class
@@ -151,4 +150,14 @@ $di->setShared('assets', function() {
     ->addCss('css/layout.css')
     ->addFilter(new Phalcon\Assets\Filters\Cssmin());
     return $manager;
+});
+
+$di->set('modelsManager',function() {
+        return new ModelsManager();
+    }
+);
+
+$di->set("logger", function () {
+    $config = $this->getConfig();
+    return new LogFileAdapter($config->application->logPath);
 });

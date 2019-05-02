@@ -1,6 +1,6 @@
 <?php
 
-class Calculadoras extends \Phalcon\Mvc\Model
+class Idiomas extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -13,7 +13,7 @@ class Calculadoras extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $img_ruta;
+    public $idioma;
 
     /**
      * Initialize method for model.
@@ -21,8 +21,7 @@ class Calculadoras extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("calculadoras");
-        $this->setSource("calculadoras");
-        $this->hasMany('id', 'Calculadoras\IdiomasCalculadoras', 'calculadora_id', ['alias' => 'IdiomasCalculadoras']);
+        $this->setSource("idiomas");
     }
 
     /**
@@ -32,14 +31,14 @@ class Calculadoras extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'calculadoras';
+        return 'idiomas';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Calculadoras[]|Calculadoras|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return Idiomas[]|Idiomas|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -50,7 +49,7 @@ class Calculadoras extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Calculadoras|\Phalcon\Mvc\Model\ResultInterface
+     * @return Idiomas|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

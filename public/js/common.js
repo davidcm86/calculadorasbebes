@@ -1,5 +1,5 @@
 /**
- * Escuchamos el elemento del selector del lenguage y así no utilizamos onclick
+ * Escuchamos el elemento del selector del lenguage y así no utilizamos onchange el cual no podemos con volt
  */
 var selectlanguage = document.getElementById("select-language");
 selectlanguage.addEventListener("change", changeLanguage);

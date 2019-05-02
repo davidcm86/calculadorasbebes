@@ -1,17 +1,18 @@
 <html>
     <head>
-        <title>{{ t._('titulo-pagina') }} - An example blog</title>
+        {% if titlePagina is defined %}
+            <title>{{ t._('' ~ titlePagina ~ '') }} - An example blog</title>
+        {% endif %}
         {{ assets.outputCss('localCss') }}
         <link rel="alternate" href="{{ dominioPhp }}/{{ lang }}" hreflang="{{ language }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% if descriptionMeta is defined %}
+            <meta name="description" content="{{ t._('' ~ descriptionMeta ~ '') }}">
+        {% endif %}
     </head>
     <body>
         <div class="container-medium">
             {% include 'partials/header.volt' %}
-            <div class="row">
-                <div class="col-sm-6 bg-gray"><br><br></div>
-                <div class="col-sm-6 bg-gray-light"><br><br></div>
-            </div>
             {{ content() }}
             {% include 'partials/footer.volt' %}
         </div>
