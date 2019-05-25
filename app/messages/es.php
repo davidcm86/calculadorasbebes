@@ -1,5 +1,6 @@
 <?php
     $messages = [
+        'inicio' => 'Inicio',
         'principal-meta-title' => 'Calculadoras para bebés y embarazadas.',
         'principal-meta-description' => 'Calculadoras para bebés y embarazadas. Aquí puedes saber las futuras características de tu bebé con unos sencillos pasos.',
         'calculadora-embarazo' => 'Calculadora del embarazo',

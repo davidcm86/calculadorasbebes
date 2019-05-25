@@ -1,7 +1,9 @@
+<ol class="breadcrumb aligner aligner--centerHoritzontal">
+    {{ Breadcrumbs.output() }}
+</ol>
 <h1 class="aligner aligner--centerHoritzontal aligner--centerVertical">{{ t._('calculadora-embarazo') }}</h1>
 {{ form('' ~ formAction ~ '', 'method': 'post') }}
 
-    {# TODO: Textos explicatorios y entrada #}
     <p>{{ t._('calculadora-embarazo-texto-1') }}</p>
 
     {% if mensajesError is defined%}

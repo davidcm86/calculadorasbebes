@@ -1,5 +1,6 @@
 <?php
     $messages = [
+        'inicio' => 'Home',
         'principal-meta-title' => 'Calculators for babies and pregnant women',
         'principal-meta-description' => 'Calculators for babies and pregnant women. Here you can know the future characteristics of your baby with a few simple steps.',
         'calculadora-embarazo' => 'Pregnancy calculator',

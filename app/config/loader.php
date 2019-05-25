@@ -10,4 +10,14 @@ $loader->registerDirs(
         $config->application->controllersDir,
         $config->application->modelsDir
     ]
-)->register();
+);
+if (file_exists(BASE_PATH . '/app/vendor/autoload.php')) {    
+    require_once BASE_PATH . '/app/vendor/autoload.php';
+}
+/**
+ * Register the custom loader (if any)
+ */
+if (file_exists(BASE_PATH . '/vendor/phalcon/autoload.php')) {
+    require_once BASE_PATH . '/vendor/phalcon/autoload.php';
+}
+$loader->register();

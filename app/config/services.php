@@ -10,6 +10,7 @@ use Phalcon\Flash\Direct as Flash;
 use Phalcon\Mvc\Model\Manager as ModelsManager;
 use Phalcon\Logger;
 use Phalcon\Logger\Adapter\File as LogFileAdapter;
+use Phalcon\Breadcrumbs;
 
 /**
  * Shared configuration service
@@ -160,4 +161,8 @@ $di->set('modelsManager',function() {
 $di->set("logger", function () {
     $config = $this->getConfig();
     return new LogFileAdapter($config->application->logPath);
+});
+
+$di->setShared('Breadcrumbs', function () {
+    return new Breadcrumbs;
 });
