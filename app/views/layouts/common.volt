@@ -1,7 +1,7 @@
 <html>
     <head>
         {% if titlePagina is defined %}
-            <title>{{ t._('' ~ titlePagina ~ '') }} - An example blog</title>
+            <title>{{ t._('' ~ titlePagina ~ '') }}</title>
         {% endif %}
         {{ assets.outputCss('localCss') }}
         <link rel="alternate" href="{{ dominioPhp }}/{{ lang }}" hreflang="{{ language }}" />
