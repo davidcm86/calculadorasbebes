@@ -41,6 +41,3 @@
         {{ submit_button(t._('calcular'), 'class': 'button button--primary button--mobileFul') }}
     </div>
 {{ end_form() }}
-<div class='box'>
-    <div class='boxChild'>asdasd</div>
-  </div>

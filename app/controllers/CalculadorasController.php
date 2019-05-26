@@ -6,8 +6,7 @@ use Phalcon\Http\Request;
 
 class CalculadorasController extends ControllerBase
 {
-    public function indexAction()
-    {
+    public function indexAction() {
         $esMovil = false;
         if ($this->Mobile_Detect->isMobile()) $esMovil = true;
         $slug = $this->dispatcher->getParam('slug');
@@ -22,52 +21,68 @@ class CalculadorasController extends ControllerBase
             switch ($vistaRenderizar) {
                 case 'embarazo';
                     if ($request->isPost()) {
-                        // TODO: SEO marcadores de contenido
-                        $mensajesError = $this->__comprobarFormEmbarazo($_POST);
-                        if (empty($mensajesError)) {
-                            $fechaCompleta =  $_POST['anio-seleccion-regla'] . '-' . $_POST['mes-seleccion-regla'] . '-' . $_POST['dia-seleccion-regla'];
-                            if ($language == 'en') {
-                                $fechaPrevistaParto = date('Y-m-d', strtotime($fechaCompleta . '+40 week'));
-                                $fechaPrevistaSave = date('Y-m-d', strtotime($fechaCompleta . '+40 week'));
-                            } else {
-                                $fechaPrevistaParto = date('d-m-Y', strtotime($fechaCompleta . '+40 week'));
-                                $fechaPrevistaSave = date('Y-m-d', strtotime($fechaCompleta . '+40 week'));
-                            }
-                            $this->view->fechaPrevistaParto = $fechaPrevistaParto;
-                            $ipUsuario = $this->getUserIP();
-                            if (!empty($ipUsuario)) {
-                                // si el usuario ya hizo calculadora y tiene datos, no volver a crearlo
-                                $this->LocalizacionUsuariosCalculadoras = new LocalizacionUsuariosCalculadoras();
-                                if (!$this->__existeResultadoCalculadora($ipUsuario, CAL_EMBARAZO)) {
-                                    $locationUser = $this->getLocationFromIp($ipUsuario);
-                                    if (!empty($locationUser)) {
-                                        $resultDecode = json_decode($locationUser);
-                                        $idLocalizacion = $this->LocalizacionUsuariosCalculadoras->salvarLocalizacion($resultDecode, CAL_EMBARAZO, $language);
-                                        $this->ResultadosCalculadoras = new ResultadosCalculadoras();
-                                        $data['fecha_ultima_regla'] = $fechaCompleta;
-                                        $data['fecha_prevista_parto'] = $fechaPrevistaSave;
-                                        $this->ResultadosCalculadoras->salvarResultado($data, CAL_EMBARAZO, $idLocalizacion);
-                                    }
-                                }
-                            }
-                            $_POST = [];
-                        } else {
-                            $this->view->mensajesError = $mensajesError;
-                        }
+                        $this->__embarazo($_POST, $language);
                     }
-                    $this->Breadcrumbs->setSeparator('&raquo;&nbsp;');
-                    $this->Breadcrumbs->add($t->_('calculadora-embarazo'), null, ['linked' => false]);
-                    $this->view->descriptionMeta = $vistaRenderizar . '-meta-description';
-                    $this->view->titlePagina = $vistaRenderizar . '-meta-title';
+                    $cadenaH1Traduccion = 'calculadora-embarazo';
                     $this->view->dias = $this->__getDias();
                     $this->view->meses = $this->__getMeseslanguage($language);
                     $this->view->anios = $this->__getAnios('actualAnterior');
-                    $this->view->esMovil = $esMovil;
+                    
                     break;
             }
+            $this->Breadcrumbs->setSeparator('&nbsp;&raquo;&nbsp;');
+            $this->Breadcrumbs->add($t->_($cadenaH1Traduccion), null, ['linked' => false]);
+            $this->view->esMovil = $esMovil;
+            $this->view->descriptionMeta = $vistaRenderizar . '-meta-description';
+            $this->view->titlePagina = $vistaRenderizar . '-meta-title';
             return $this->view->pick('calculadoras/' . $vistaRenderizar);
         } else {
             $this->thrown404();
+        }
+    }
+
+    /**
+     * Lógica para calcular la fecha de embarazo
+    */
+    private function __embarazo($post, $language) {
+        // TODO: SEO marcadores de contenido
+        $mensajesError = $this->__comprobarFormEmbarazo($_POST);
+        if (empty($mensajesError)) {
+            $fechaCompleta =  $_POST['anio-seleccion-regla'] . '-' . $_POST['mes-seleccion-regla'] . '-' . $_POST['dia-seleccion-regla'];
+            if ($language == 'en') {
+                $fechaPrevistaParto = date('Y-m-d', strtotime($fechaCompleta . '+40 week'));
+                $fechaPrevistaSave = date('Y-m-d', strtotime($fechaCompleta . '+40 week'));
+            } else {
+                $fechaPrevistaParto = date('d-m-Y', strtotime($fechaCompleta . '+40 week'));
+                $fechaPrevistaSave = date('Y-m-d', strtotime($fechaCompleta . '+40 week'));
+            }
+            $this->view->fechaPrevistaParto = $fechaPrevistaParto;
+            $data['fecha_ultima_regla'] = $fechaCompleta;
+            $data['fecha_prevista_parto'] = $fechaPrevistaSave;
+            $this->__salvarIpAndResultadoCalculadora($language, CAL_EMBARAZO, $data);
+            $_POST = [];
+        } else {
+            $this->view->mensajesError = $mensajesError;
+        }
+    }
+
+    /**
+     * Salvamos la ip y localización del usuario y la data y el resul de su form
+     */
+    private function __salvarIpAndResultadoCalculadora($language, $calculadoraId, $data) {
+        $ipUsuario = $this->getUserIP();
+        if (!empty($ipUsuario)) {
+            // si el usuario ya hizo calculadora y tiene datos, no volver a crearlo
+            $this->LocalizacionUsuariosCalculadoras = new LocalizacionUsuariosCalculadoras();
+            if (!$this->__existeResultadoCalculadora($ipUsuario, $calculadoraId)) {
+                $locationUser = $this->getLocationFromIp($ipUsuario);
+                if (!empty($locationUser)) {
+                    $resultDecode = json_decode($locationUser);
+                    $idLocalizacion = $this->LocalizacionUsuariosCalculadoras->salvarLocalizacion($resultDecode, $calculadoraId, $language);
+                    $this->ResultadosCalculadoras = new ResultadosCalculadoras();
+                    $this->ResultadosCalculadoras->salvarResultado($data, CAL_EMBARAZO, $idLocalizacion);
+                }
+            }
         }
     }
 
@@ -175,7 +190,10 @@ class CalculadorasController extends ControllerBase
         return $meses;
     }
 
-    // para los diferentes slugs de las calculadoras, agrupamos la vista que se muestra para cada calculadora sabiendo que renderizar
+    /**
+     * Para los diferentes slugs de las calculadoras, agrupamos la vista que se muestra para cada calculadora sabiendo que renderizar.
+     * Si  no existe el slug tiramos 404
+     */
     private function __calculadorasSlugs($slug, $language) {
         $slugsArray = [
             'es' => [

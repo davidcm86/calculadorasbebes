@@ -2419,18 +2419,3 @@ h1 {
 }
 
 /*# sourceMappingURL=layout.css.map */
-
-.breadcrumb ul
-{
-   padding-right: 0px;
-   padding-left: 0px;
-   padding-bottom: 0px;
-   padding-top: 0px;
-   margin: 0px;
-}
-.breadcrumb li
-{
-   list-style-type: none;
-   display: inline;
-   padding-right: 5px;
-}
