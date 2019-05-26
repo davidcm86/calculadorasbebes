@@ -4,7 +4,13 @@
 <h1 class="aligner aligner--centerHoritzontal aligner--centerVertical">{{ t._('calculadora-embarazo') }}</h1>
 {{ form('' ~ formAction ~ '', 'method': 'post') }}
 
-    <p>{{ t._('calculadora-embarazo-texto-1') }}</p>
+    {% if fechaPrevistaParto is defined %}
+        <div class="notification notification--success aligner aligner--centerHoritzontal aligner--centerVertical">
+            <p>
+                {{ t._('embarazada-resultado-1') }}{{ fechaPrevistaParto }}
+            </p>
+        </div>
+    {% endif %}
 
     {% if mensajesError is defined%}
         <div class="notification notification--error aligner aligner--centerHoritzontal aligner--centerVertical">
@@ -16,13 +22,7 @@
         </div>
     {% endif %}
 
-    {% if fechaPrevistaParto is defined %}
-        <div class="notification notification--success aligner aligner--centerHoritzontal aligner--centerVertical">
-            <p>
-                {{ t._('embarazada-resultado-1') }}{{ fechaPrevistaParto }}
-            </p>
-        </div>
-    {% endif %}
+    <p>{{ t._('calculadora-embarazo-texto-1') }}</p>
 
     <label class="label">{{ t._('embarazada-form-1') }}</label>
     <div class="formCollapsed">
@@ -36,7 +36,11 @@
             {{ select("anio-seleccion-regla", anios, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': t._('anio')) }}
         </div>
     </div>
+
     <div class="aligner aligner--centerHoritzontal aligner--centerVertical">
-    {{ submit_button(t._('calcular'), 'class': 'button button--primary button--mobileFul') }}
+        {{ submit_button(t._('calcular'), 'class': 'button button--primary button--mobileFul') }}
     </div>
 {{ end_form() }}
+<div class='box'>
+    <div class='boxChild'>asdasd</div>
+  </div>

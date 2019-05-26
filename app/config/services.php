@@ -11,6 +11,11 @@ use Phalcon\Mvc\Model\Manager as ModelsManager;
 use Phalcon\Logger;
 use Phalcon\Logger\Adapter\File as LogFileAdapter;
 use Phalcon\Breadcrumbs;
+use \Mobile_Detect;
+
+$di->setShared('Mobile_Detect', function () {
+    return new Mobile_Detect;
+});
 
 /**
  * Shared configuration service

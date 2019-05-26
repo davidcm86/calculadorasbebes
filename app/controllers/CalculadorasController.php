@@ -8,6 +8,8 @@ class CalculadorasController extends ControllerBase
 {
     public function indexAction()
     {
+        $esMovil = false;
+        if ($this->Mobile_Detect->isMobile()) $esMovil = true;
         $slug = $this->dispatcher->getParam('slug');
         $language = $this->dispatcher->getParam('language');
         $vistaRenderizar = $this->__calculadorasSlugs($slug, $language);
@@ -60,6 +62,7 @@ class CalculadorasController extends ControllerBase
                     $this->view->dias = $this->__getDias();
                     $this->view->meses = $this->__getMeseslanguage($language);
                     $this->view->anios = $this->__getAnios('actualAnterior');
+                    $this->view->esMovil = $esMovil;
                     break;
             }
             return $this->view->pick('calculadoras/' . $vistaRenderizar);
