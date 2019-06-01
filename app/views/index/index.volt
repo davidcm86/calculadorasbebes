@@ -6,7 +6,9 @@
                     <h3>{{ link_to('/' ~ lang ~ '/' ~ calculadora.slug ~ '', calculadora.nombre_calculadora) }}</h3>
                 </div>
                 <div class="col-sm-12 aligner aligner--centerHoritzontal aligner--centerVertical">
-                    {{ image("img/embarazada.png", "alt": "Logo bebé", "width": "102") }}
+                    <a href="{{ '/' ~ lang ~ '/' ~ calculadora.slug ~ '' }}">
+                        {{ image("" ~ calculadora.ruta_imagen ~ "", "alt": "" ~ calculadora.nombre_calculadora ~ "", "width": "102") }}
+                    </a>
                 </div>
             </div>
         </div>

@@ -27,7 +27,15 @@ class CalculadorasController extends ControllerBase
                     $this->view->dias = $this->__getDias();
                     $this->view->meses = $this->__getMeseslanguage($language);
                     $this->view->anios = $this->__getAnios('actualAnterior');
-                    
+                    break;
+                case 'sexo-bebe';
+                    if ($request->isPost()) {
+                        $this->__sexoBebe($_POST, $language);
+                    }
+                    $cadenaH1Traduccion = 'calculadora-sexo-bebe';
+                    $this->view->meses = $this->__getMeseslanguage($language);
+                    // TODO: los años tienen que ser los de la bbdd
+                    $this->view->anios = $this->__getAnios('actualAnterior');
                     break;
             }
             $this->Breadcrumbs->setSeparator('&nbsp;&raquo;&nbsp;');
@@ -45,7 +53,6 @@ class CalculadorasController extends ControllerBase
      * Lógica para calcular la fecha de embarazo
     */
     private function __embarazo($post, $language) {
-        // TODO: SEO marcadores de contenido
         $mensajesError = $this->__comprobarFormEmbarazo($_POST);
         if (empty($mensajesError)) {
             $fechaCompleta =  $_POST['anio-seleccion-regla'] . '-' . $_POST['mes-seleccion-regla'] . '-' . $_POST['dia-seleccion-regla'];
@@ -64,6 +71,35 @@ class CalculadorasController extends ControllerBase
         } else {
             $this->view->mensajesError = $mensajesError;
         }
+    }
+
+    private function __comprobarFormEmbarazo($post) {
+        $mensajes = [];
+        if (empty($post['dia-seleccion-regla']) || !is_numeric($post['dia-seleccion-regla'])) $mensajes[] = "error-fecha-dia";
+        if (empty($post['mes-seleccion-regla']) || !is_numeric($post['mes-seleccion-regla'])) $mensajes[] = "error-fecha-mes";
+        if (empty($post['anio-seleccion-regla']) || !is_numeric($post['anio-seleccion-regla'])) $mensajes[] = "error-fecha-anio";
+        return $mensajes;
+    }
+
+    /**
+    * Lógica para calcular el sexo del bebé
+    */
+    private function __sexoBebe($post, $language) {
+        $mensajesError = $this->__comprobarFormSexoBebe($_POST);
+        if (empty($mensajesError)) {
+            // TODO: comprar los datos con BBDD, si existe es niña, de lo contrario es data que no he metido y será niño
+            $this->__salvarIpAndResultadoCalculadora($language, CAL_EMBARAZO, $data);
+            $_POST = [];
+        } else {
+            $this->view->mensajesError = $mensajesError;
+        }
+    }
+
+    private function __comprobarFormSexoBebe($post) {
+        $mensajes = [];
+        if (empty($post['tu-edad']) || !is_numeric($post['tu-edad'])) $mensajes[] = "error-tu-edad";
+        if (empty($post['mes-concepcion-bebe']) || !is_numeric($post['mes-concepcion-bebe'])) $mensajes[] = "error-mes-concepcion-bebe";
+        return $mensajes;
     }
 
     /**
@@ -94,14 +130,6 @@ class CalculadorasController extends ControllerBase
         $result = $this->LocalizacionUsuariosCalculadoras->findFirst($params);
         if (!empty($result)) return true;
         return false;
-    }
-
-    private function __comprobarFormEmbarazo($post) {
-        $mensajes = [];
-        if (empty($post['dia-seleccion-regla'])) $mensajes[] = "error-fecha-dia";
-        if (empty($post['mes-seleccion-regla'])) $mensajes[] = "error-fecha-mes";
-        if (empty($post['anio-seleccion-regla'])) $mensajes[] = "error-fecha-anio";
-        return $mensajes;
     }
 
     private function __getAnios($tipo) {
@@ -191,16 +219,19 @@ class CalculadorasController extends ControllerBase
     }
 
     /**
-     * Para los diferentes slugs de las calculadoras, agrupamos la vista que se muestra para cada calculadora sabiendo que renderizar.
-     * Si  no existe el slug tiramos 404
+     * Para los diferentes slugs de las calculadoras, agrupamos la vista que se muestra para cada calculadora sabiendo que renderizar,
+     * debido a distintos idiomas.
+     * Si no existe el slug tiramos 404
      */
     private function __calculadorasSlugs($slug, $language) {
         $slugsArray = [
             'es' => [
-                'embarazo' => 'calculadora-del-embarazo'
+                'embarazo' => 'calculadora-del-embarazo',
+                'sexo-bebe' => 'calculadora-sexo-bebe',
             ],
             'en' => [
-                'embarazo' => 'pregnancy-calculator'
+                'embarazo' => 'pregnancy-calculator',
+                'sexo-bebe' => 'baby-sex-calculator',
             ],
         ];
         $vistaRenderizar = array_search($slug, $slugsArray[$language]);
