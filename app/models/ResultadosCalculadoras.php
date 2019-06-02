@@ -91,20 +91,12 @@ class ResultadosCalculadoras extends \Phalcon\Mvc\Model
 
     public function salvarResultado($datos, $calculadoraId, $idLocalizacion) 
     {
-        switch ($calculadoraId) {
-            case CAL_EMBARAZO:
-                foreach ($datos as $key => $dato) {
-                    // Si creamos un array para salvar en el create, solo se guarda la primera iteración. Esto es lo correcto.
-                    $resultadosCalculadoras = new ResultadosCalculadoras();
-                    $resultadosCalculadoras->campo = $key;
-                    $resultadosCalculadoras->resultado_fecha = $dato;
-                    $resultadosCalculadoras->calculadora_id = $calculadoraId;
-                    $resultadosCalculadoras->localizacion_usuario_calculadora_id = $idLocalizacion;
-                    $resultadosCalculadoras->create();
-                }
-                break;
-        }
-
+        $resultadosCalculadoras = new ResultadosCalculadoras();
+        $resultadosCalculadoras->data = $datos['data-serialize'];
+        $resultadosCalculadoras->result = $datos['result-serialize'];
+        $resultadosCalculadoras->calculadora_id = $calculadoraId;
+        $resultadosCalculadoras->localizacion_usuario_calculadora_id = $idLocalizacion;
+        $resultadosCalculadoras->create();
     }
 
     public function beforeCreate()

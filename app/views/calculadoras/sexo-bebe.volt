@@ -4,10 +4,10 @@
 <h1 class="aligner aligner--centerHoritzontal aligner--centerVertical">{{ t._('calculadora-sexo-bebe') }}</h1>
 {{ form('' ~ formAction ~ '', 'method': 'post') }}
 
-    {% if fechaPrevistaParto is defined %}
+    {% if sexo is defined %}
         <div class="notification notification--success aligner aligner--centerHoritzontal aligner--centerVertical">
             <p>
-                {{ t._('embarazada-resultado-1') }}{{ fechaPrevistaParto }}
+                {{ t._('sexo-bebe-resultado-1') }} {{ sexo }}
             </p>
         </div>
     {% endif %}
@@ -24,12 +24,12 @@
 
     <p>{{ t._('calculadora-sexo-bebe-texto-1') }}</p>
     <p>{{ t._('calculadora-sexo-bebe-texto-2') }}</p>
-
-    <div class="formCollapsed">
-        <div class="select formCollapsed-item formCollapsed-itemPrimary">
+    
+    <div class="{{ form }}">
+        <div class="{{ class }}">
             {{ select("tu-edad", anios, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': t._('tu-edad')) }}
         </div>
-        <div class="select formCollapsed-item formCollapsed-itemPrimary">
+        <div class="{{ class }}">
             {{ select("mes-concepcion-bebe", meses, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': t._('mes-concepcion-bebe')) }}
         </div>
     </div>

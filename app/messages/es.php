@@ -33,5 +33,8 @@
         'tu-edad' => 'Tu edad',
         'error-tu-edad' => 'Debes introducir tu edad.',
         'error-mes-concepcion-bebe' => 'Debes introducir el mes de concepción.',
+        'sexo-bebe-resultado-1' => '¡Enhorabuena!, su bebé será: ',
+        'ninia' => 'NIÑA',
+        'ninio' => 'NIÑO',
     ];
 ?>

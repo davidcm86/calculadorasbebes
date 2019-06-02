@@ -30,17 +30,16 @@ class CalculadorasController extends ControllerBase
                     break;
                 case 'sexo-bebe';
                     if ($request->isPost()) {
-                        $this->__sexoBebe($_POST, $language);
+                        $this->__sexoBebe($_POST, $language, $t);
                     }
                     $cadenaH1Traduccion = 'calculadora-sexo-bebe';
                     $this->view->meses = $this->__getMeseslanguage($language);
-                    // TODO: los años tienen que ser los de la bbdd
-                    $this->view->anios = $this->__getAnios('actualAnterior');
+                    $this->view->anios = $this->__getEdadesSexoBebe();
+                    $this->__setMovilAndPcForm($esMovil);
                     break;
             }
             $this->Breadcrumbs->setSeparator('&nbsp;&raquo;&nbsp;');
             $this->Breadcrumbs->add($t->_($cadenaH1Traduccion), null, ['linked' => false]);
-            $this->view->esMovil = $esMovil;
             $this->view->descriptionMeta = $vistaRenderizar . '-meta-description';
             $this->view->titlePagina = $vistaRenderizar . '-meta-title';
             return $this->view->pick('calculadoras/' . $vistaRenderizar);
@@ -64,8 +63,9 @@ class CalculadorasController extends ControllerBase
                 $fechaPrevistaSave = date('Y-m-d', strtotime($fechaCompleta . '+40 week'));
             }
             $this->view->fechaPrevistaParto = $fechaPrevistaParto;
-            $data['fecha_ultima_regla'] = $fechaCompleta;
-            $data['fecha_prevista_parto'] = $fechaPrevistaSave;
+            $dataEncode['fecha_ultima_regla'] = $fechaCompleta;
+            $data['data-serialize'] = serialize($dataEncode);
+            $data['result-serialize'] = serialize($fechaPrevistaParto);
             $this->__salvarIpAndResultadoCalculadora($language, CAL_EMBARAZO, $data);
             $_POST = [];
         } else {
@@ -84,11 +84,17 @@ class CalculadorasController extends ControllerBase
     /**
     * Lógica para calcular el sexo del bebé
     */
-    private function __sexoBebe($post, $language) {
+    private function __sexoBebe($post, $language, $t) {
         $mensajesError = $this->__comprobarFormSexoBebe($_POST);
         if (empty($mensajesError)) {
-            // TODO: comprar los datos con BBDD, si existe es niña, de lo contrario es data que no he metido y será niño
-            $this->__salvarIpAndResultadoCalculadora($language, CAL_EMBARAZO, $data);
+            $this->CalendarioBebeChino2019 = new CalendarioBebeChino2019();
+            $sexoBebe = $this->CalendarioBebeChino2019->getSexoBebe($_POST);
+            $dataEncode['edad-mama'] = $post['tu-edad'];
+            $dataEncode['mes-concepcion-bebe'] = $post['mes-concepcion-bebe'];
+            $data['data-serialize'] = serialize($dataEncode);
+            $data['result-serialize'] = serialize($sexoBebe);
+            $this->__salvarIpAndResultadoCalculadora($language, CAL_SEXO_BEBE, $data);
+            $this->view->sexo = $t->_($sexoBebe);
             $_POST = [];
         } else {
             $this->view->mensajesError = $mensajesError;
@@ -116,7 +122,7 @@ class CalculadorasController extends ControllerBase
                     $resultDecode = json_decode($locationUser);
                     $idLocalizacion = $this->LocalizacionUsuariosCalculadoras->salvarLocalizacion($resultDecode, $calculadoraId, $language);
                     $this->ResultadosCalculadoras = new ResultadosCalculadoras();
-                    $this->ResultadosCalculadoras->salvarResultado($data, CAL_EMBARAZO, $idLocalizacion);
+                    $this->ResultadosCalculadoras->salvarResultado($data, $calculadoraId, $idLocalizacion);
                 }
             }
         }
@@ -126,9 +132,7 @@ class CalculadorasController extends ControllerBase
      * Comprobamos si ya existe resultado para esa calculadora e ip del usuario
      */
     private function __existeResultadoCalculadora($ip, $calculadoraId) {
-        $params = ['ip' => $ip, 'calculadora_id' => $calculadoraId];
-        $result = $this->LocalizacionUsuariosCalculadoras->findFirst($params);
-        if (!empty($result)) return true;
+        if ($this->LocalizacionUsuariosCalculadoras->checkUsuarioCalIp($ip, $calculadoraId)) return true;
         return false;
     }
 
@@ -218,6 +222,39 @@ class CalculadorasController extends ControllerBase
         return $meses;
     }
 
+    private function __getEdadesSexoBebe() {
+        $anios = [
+            '18' => 18,
+            '19' => 19,
+            '20' => 20,
+            '21' => 21,
+            '22' => 22,
+            '23' => 23,
+            '24' => 24,
+            '25' => 25,
+            '26' => 26,
+            '27' => 27,
+            '28' => 28,
+            '29' => 29,
+            '30' => 30,
+            '31' => 31,
+            '32' => 32,
+            '33' => 33,
+            '34' => 34,
+            '35' => 35,
+            '36' => 36,
+            '37' => 37,
+            '38' => 38,
+            '39' => 39,
+            '40' => 40,
+            '41' => 41,
+            '42' => 42,
+            '43' => 43,
+            '44' => 44
+        ];
+        return $anios;
+    }
+
     /**
      * Para los diferentes slugs de las calculadoras, agrupamos la vista que se muestra para cada calculadora sabiendo que renderizar,
      * debido a distintos idiomas.
@@ -236,6 +273,20 @@ class CalculadorasController extends ControllerBase
         ];
         $vistaRenderizar = array_search($slug, $slugsArray[$language]);
         return $vistaRenderizar;
+    }
+
+    /**
+     * Dependiendo del form y de si estamos en pc o movil, se mostrará el form colapsado o no.
+     */
+    private function __setMovilAndPcForm($esMovil) {
+        $form = 'formCollapsed';
+        $class = 'select formCollapsed-item formCollapsed-itemPrimary';
+        if ($esMovil) {
+            $form = 'form';
+            $class = 'select select-fullWidth';
+        }
+        $this->view->form = $form;
+        $this->view->class = $class;
     }
 
 }
