@@ -27,6 +27,7 @@ class CalculadorasController extends ControllerBase
                     $this->view->dias = $this->__getDias();
                     $this->view->meses = $this->__getMeseslanguage($language);
                     $this->view->anios = $this->__getAnios('actualAnterior');
+                    $calculadoraId = CAL_EMBARAZO;
                     break;
                 case 'sexo-bebe';
                     if ($request->isPost()) {
@@ -36,8 +37,11 @@ class CalculadorasController extends ControllerBase
                     $this->view->meses = $this->__getMeseslanguage($language);
                     $this->view->anios = $this->__getEdadesSexoBebe();
                     $this->__setMovilAndPcForm($esMovil);
+                    $calculadoraId = CAL_SEXO_BEBE;
                     break;
             }
+            $this->ResultadosCalculadoras = new ResultadosCalculadoras();
+            $this->view->estadisticasCalculadora = $this->__formatearResult($this->ResultadosCalculadoras->getEstadisticas($calculadoraId), $calculadoraId);
             $this->Breadcrumbs->setSeparator('&nbsp;&raquo;&nbsp;');
             $this->Breadcrumbs->add($t->_($cadenaH1Traduccion), null, ['linked' => false]);
             $this->view->descriptionMeta = $vistaRenderizar . '-meta-description';
@@ -64,8 +68,8 @@ class CalculadorasController extends ControllerBase
             }
             $this->view->fechaPrevistaParto = $fechaPrevistaParto;
             $dataEncode['fecha_ultima_regla'] = $fechaCompleta;
-            $data['data-serialize'] = serialize($dataEncode);
-            $data['result-serialize'] = serialize($fechaPrevistaParto);
+            $data['data-serialize'] = json_encode($dataEncode);
+            $data['result-serialize'] = json_encode($fechaPrevistaParto);
             $this->__salvarIpAndResultadoCalculadora($language, CAL_EMBARAZO, $data);
             $_POST = [];
         } else {
@@ -91,8 +95,8 @@ class CalculadorasController extends ControllerBase
             $sexoBebe = $this->CalendarioBebeChino2019->getSexoBebe($_POST);
             $dataEncode['edad-mama'] = $post['tu-edad'];
             $dataEncode['mes-concepcion-bebe'] = $post['mes-concepcion-bebe'];
-            $data['data-serialize'] = serialize($dataEncode);
-            $data['result-serialize'] = serialize($sexoBebe);
+            $data['data-serialize'] = json_encode($dataEncode);
+            $data['result-serialize'] = json_encode($sexoBebe);
             $this->__salvarIpAndResultadoCalculadora($language, CAL_SEXO_BEBE, $data);
             $this->view->sexo = $t->_($sexoBebe);
             $_POST = [];
@@ -287,6 +291,26 @@ class CalculadorasController extends ControllerBase
         }
         $this->view->form = $form;
         $this->view->class = $class;
+    }
+
+    /**
+     * Formateamos el resultado de la calculadora según queramos dependiendo de la calculadora y si necesita traducción o no.
+     */
+    private function __formatearResult($data, $calculadoraId) {
+        $datos = $data;
+        switch ($calculadoraId) {
+            case CAL_EMBARAZO;
+                foreach ($datos as $key => $field) {
+                    $datos[$key]->result = json_decode($field->result);
+                    $ultimaRegla = json_decode($field->data);
+                    $datos[$key]->data = $ultimaRegla->fecha_ultima_regla;
+                }
+                break;
+            case CAL_SEXO_BEBE;
+                break;
+        }
+        print_r($datos[$key]->data);die;
+        return $datos;
     }
 
 }

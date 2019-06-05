@@ -148,7 +148,7 @@ class LocalizacionUsuariosCalculadoras extends \Phalcon\Mvc\Model
     }
 
     public function checkUsuarioCalIp($ip, $calculadoraId) {
-        // TODO: la calculadora id llega como string ya que los define no admiten numeric
+        // la calculadora id llega como string ya que los define no admiten numeric
         $phql = 'SELECT * FROM LocalizacionUsuariosCalculadoras  WHERE ip = "'.$ip.'" and calculadora_id = "'.$calculadoraId.'"';
         $manager = $this->modelsManager;
         $result = $manager->executeQuery($phql);

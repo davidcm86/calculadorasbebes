@@ -38,3 +38,5 @@
         {{ submit_button(t._('calcular'), 'class': 'button button--primary button--mobileFul') }}
     </div>
 {{ end_form() }}
+
+{{ partial('partials/estadisticas') }}
