@@ -42,4 +42,4 @@
     </div>
 {{ end_form() }}
 
-{{ partial('partials/estadisticas', ['estadisticasCalculadora': estadisticasCalculadora]) }}
+{{ partial('partials/estadisticas', ['estadisticasCalculadora': estadisticasCalculadora, 'calculadoraId': calculadoraId]) }}

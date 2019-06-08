@@ -2418,4 +2418,19 @@ h1 {
   padding-bottom: 5px;
 }
 
+h2 {
+  color: #7656F7;
+  font-weight: bold;
+  font-size: 1.2em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.contenedor-estadisticas {
+  background: #f2d4fc;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px;
+}
+
 /*# sourceMappingURL=layout.css.map */

@@ -36,5 +36,12 @@
         'sexo-bebe-resultado-1' => 'Congratulations! Your baby will be a:',
         'ninia' => 'GIRL',
         'ninio' => 'BOY',
+        'creado-el' => 'Created',
+        'fecha-mestruacion' => 'Menstruation date',
+        'fecha-parto' => 'Birth date',
+        'edad-mama' => 'Mom\'s age',
+        'mes-concepcion' => 'Month conception',
+        'sexo' => 'Sex',
+        'resultado-otros-usuarios' => 'Results other users'
     ];
 ?>

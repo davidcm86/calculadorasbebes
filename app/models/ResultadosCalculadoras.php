@@ -107,7 +107,8 @@ class ResultadosCalculadoras extends \Phalcon\Mvc\Model
     public function getEstadisticas($calculadoraId) {
         $phql = "SELECT * FROM ResultadosCalculadoras WHERE calculadora_id = $calculadoraId ORDER BY created DESC LIMIT 10";
         $manager = $this->modelsManager;
-        $result = $manager->executeQuery($phql);
+        // convertimos el resultado a array para así luego poder cambiarlo en un bucle, con el objeto no se puede cambiar en phalcon
+        $result = $manager->executeQuery($phql)->toArray();
         return $result;
     }
 

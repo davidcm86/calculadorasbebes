@@ -41,7 +41,8 @@ class CalculadorasController extends ControllerBase
                     break;
             }
             $this->ResultadosCalculadoras = new ResultadosCalculadoras();
-            $this->view->estadisticasCalculadora = $this->__formatearResult($this->ResultadosCalculadoras->getEstadisticas($calculadoraId), $calculadoraId);
+            $this->view->estadisticasCalculadora = $this->__formatearResult($this->ResultadosCalculadoras->getEstadisticas($calculadoraId), $calculadoraId, $t, $language);
+            $this->view->calculadoraId = $calculadoraId;
             $this->Breadcrumbs->setSeparator('&nbsp;&raquo;&nbsp;');
             $this->Breadcrumbs->add($t->_($cadenaH1Traduccion), null, ['linked' => false]);
             $this->view->descriptionMeta = $vistaRenderizar . '-meta-description';
@@ -93,8 +94,8 @@ class CalculadorasController extends ControllerBase
         if (empty($mensajesError)) {
             $this->CalendarioBebeChino2019 = new CalendarioBebeChino2019();
             $sexoBebe = $this->CalendarioBebeChino2019->getSexoBebe($_POST);
-            $dataEncode['edad-mama'] = $post['tu-edad'];
-            $dataEncode['mes-concepcion-bebe'] = $post['mes-concepcion-bebe'];
+            $dataEncode['edad_mama'] = $post['tu-edad'];
+            $dataEncode['mes_concepcion_bebe'] = $post['mes-concepcion-bebe'];
             $data['data-serialize'] = json_encode($dataEncode);
             $data['result-serialize'] = json_encode($sexoBebe);
             $this->__salvarIpAndResultadoCalculadora($language, CAL_SEXO_BEBE, $data);
@@ -295,21 +296,33 @@ class CalculadorasController extends ControllerBase
 
     /**
      * Formateamos el resultado de la calculadora según queramos dependiendo de la calculadora y si necesita traducción o no.
+     * en phalcon no se puede modificar el resulset de la query a no ser que devuelvas un array. Esto es así debido
+     * a que hace al framework mucho más rápido entre otras cosas.
      */
-    private function __formatearResult($data, $calculadoraId) {
-        $datos = $data;
+    private function __formatearResult($data, $calculadoraId, $t, $language) {
         switch ($calculadoraId) {
             case CAL_EMBARAZO;
-                foreach ($datos as $key => $field) {
-                    $datos[$key]->result = json_decode($field->result);
-                    $ultimaRegla = json_decode($field->data);
-                    $datos[$key]->data = $ultimaRegla->fecha_ultima_regla;
+                foreach ($data as $key => $field) {
+                    if ($language != 'en') $data[$key]['created'] = date('d-m-Y', strtotime($field['created']));
+                    $data[$key]['result'] = json_decode($field['result']);
+                    if ($language == 'en') $data[$key]['result'] = date('Y-m-d', strtotime($data[$key]['result']));
+                    $ultimaRegla = json_decode($field['data']);
+                    $data[$key]['data'] = $ultimaRegla->fecha_ultima_regla;
                 }
+                $datos = json_decode(json_encode($data), FALSE);
                 break;
             case CAL_SEXO_BEBE;
+                foreach ($data as $key => $field) {
+                    if ($language != 'en') $data[$key]['created'] = date('d-m-Y', strtotime($field['created']));
+                    $data[$key]['result'] = $t->_(json_decode($field['result']));
+                    $dataIntroducido = json_decode($field['data']);
+                    $data[$key]['edad_mama'] = $dataIntroducido->edad_mama;
+                    $meses = $this->__getMeseslanguage($language);
+                    $data[$key]['mes_concepcion_bebe'] = $meses[$dataIntroducido->mes_concepcion_bebe];
+                }
+                $datos = json_decode(json_encode($data), FALSE);
                 break;
         }
-        print_r($datos[$key]->data);die;
         return $datos;
     }
 

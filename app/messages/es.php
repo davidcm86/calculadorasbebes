@@ -36,5 +36,12 @@
         'sexo-bebe-resultado-1' => '¡Enhorabuena!, su bebé será: ',
         'ninia' => 'NIÑA',
         'ninio' => 'NIÑO',
+        'creado-el' => 'Creado el',
+        'fecha-mestruacion' => 'Fecha menstruación',
+        'fecha-parto' => 'Fecha parto',
+        'edad-mama' => 'Edad mamá',
+        'mes-concepcion' => 'Mes concepción',
+        'sexo' => 'Sexo',
+        'resultado-otros-usuarios' => 'Resultados de otros usuarios'
     ];
 ?>

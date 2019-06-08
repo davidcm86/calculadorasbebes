@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-12 bg-gray-light aligner aligner--centerHoritzontal aligner--centerVertical">
+    <div class="col-sm-12 aligner aligner--centerHoritzontal aligner--centerVertical">
         {% if rutaHome is defined %}
             <a href="{{ rutaHome }}">{{ image("img/comun/logo-bebe.png", "alt": "Logo bebé calculadora", "width": "102") }}</a>
         {% else %}
