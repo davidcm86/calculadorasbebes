@@ -2426,11 +2426,27 @@ h2 {
   padding-bottom: 5px;
 }
 
+h2 {
+  color: #7656F7;
+  font-size: 1em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 .contenedor-estadisticas {
   background: #f2d4fc;
   padding: 10px;
   border-radius: 10px;
   margin: 5px;
+}
+
+.formulario-label {
+  font-weight: bold;
+  color: #a52f2f;
+  background-color: #f9f0ff;
+  border-radius: 5px;
+  margin-bottom: 3px;
+  text-align: center;
 }
 
 /*# sourceMappingURL=layout.css.map */

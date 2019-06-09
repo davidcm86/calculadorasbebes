@@ -7,6 +7,7 @@ defined('BASE_PATH') || define('BASE_PATH', getenv('BASE_PATH') ?: realpath(dirn
 defined('APP_PATH') || define('APP_PATH', BASE_PATH . '/app');
 defined('CAL_EMBARAZO') || define('CAL_EMBARAZO', '1');
 defined('CAL_SEXO_BEBE') || define('CAL_SEXO_BEBE', '2');
+defined('CAL_OJOS_BEBE') || define('CAL_OJOS_BEBE', '3');
 
 return new \Phalcon\Config([
     'database' => [

@@ -3,7 +3,7 @@
         <div class="col-sm-4 aligner aligner--centerHoritzontal aligner--centerVertical">
             <div class="container">
                 <div class="col-sm-12 aligner aligner--centerHoritzontal aligner--centerVertical">
-                    <h3>{{ link_to('/' ~ lang ~ '/' ~ calculadora.slug ~ '', calculadora.nombre_calculadora) }}</h3>
+                    <h2>{{ link_to('/' ~ lang ~ '/' ~ calculadora.slug ~ '', calculadora.nombre_calculadora) }}</h2>
                 </div>
                 <div class="col-sm-12 aligner aligner--centerHoritzontal aligner--centerVertical">
                     <a href="{{ '/' ~ lang ~ '/' ~ calculadora.slug ~ '' }}">

@@ -39,6 +39,15 @@ class CalculadorasController extends ControllerBase
                     $this->__setMovilAndPcForm($esMovil);
                     $calculadoraId = CAL_SEXO_BEBE;
                     break;
+                case 'color-ojos-bebe';
+                    /*if ($request->isPost()) {
+                        $this->__sexoBebe($_POST, $language, $t);
+                    }*/
+                    $this->__setMovilAndPcForm($esMovil);
+                    $cadenaH1Traduccion = 'calculadora-ojos-bebe';
+                    $this->view->colorOjos = $this->__colorOjos();
+                    $calculadoraId = CAL_OJOS_BEBE;
+                    break;
             }
             $this->ResultadosCalculadoras = new ResultadosCalculadoras();
             $this->view->estadisticasCalculadora = $this->__formatearResult($this->ResultadosCalculadoras->getEstadisticas($calculadoraId), $calculadoraId, $t, $language);
@@ -150,6 +159,11 @@ class CalculadorasController extends ControllerBase
                 $anios = [date('Y') => date('Y'), date('Y', strtotime('-1 year')) => date('Y', strtotime('-1 year'))];
         }
         return $anios;
+    }
+
+    private function __colorOjos() {
+        $colorOjos = ['azul' => 'Azúl', 'marron' => 'Marrón', 'verde' => 'Verde'];
+        return $colorOjos;
     }
 
     private function __getDias() {
@@ -270,10 +284,12 @@ class CalculadorasController extends ControllerBase
             'es' => [
                 'embarazo' => 'calculadora-del-embarazo',
                 'sexo-bebe' => 'calculadora-sexo-bebe',
+                'color-ojos-bebe' => 'calculadora-color-ojos-bebe'
             ],
             'en' => [
                 'embarazo' => 'pregnancy-calculator',
                 'sexo-bebe' => 'baby-sex-calculator',
+                'color-ojos-bebe' => 'baby-eyes-color-calculator'
             ],
         ];
         $vistaRenderizar = array_search($slug, $slugsArray[$language]);

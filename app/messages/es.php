@@ -42,6 +42,15 @@
         'edad-mama' => 'Edad mamá',
         'mes-concepcion' => 'Mes concepción',
         'sexo' => 'Sexo',
-        'resultado-otros-usuarios' => 'Resultados de otros usuarios'
+        'resultado-otros-usuarios' => 'Resultados de otros usuarios',
+        'calculadora-ojos-bebe' => 'Calculadora ojos del bebé',
+        'calculadora-ojos-bebe-texto-1' => 
+            'Una pregunta recurrente en todas las mamás y papás es el saber o intentar predecir de qué color serán los ojos de su bebé.
+            Con esta calculadora y dos sencillos pasos podrás tener una aproximación del color de ojos que tendrá. Está se puede calcular gracias
+            al color de los ojos de la madre y el padre, sabiendo esa combinación se puede hacer un acercamiento al color de ojos del bebé.
+            ',
+        'color-ojos-form' => 'Elige un color de ojos',
+        'color-ojos-form-1' => 'Color ojos mamá',
+        'color-ojos-form-2' => 'Color ojos papá'
     ];
 ?>
