@@ -20,33 +20,33 @@ class CalculadorasController extends ControllerBase
             $request = new Request();
             switch ($vistaRenderizar) {
                 case 'embarazo';
+                    $calculadoraId = CAL_EMBARAZO;
                     if ($request->isPost()) {
-                        $this->__embarazo($_POST, $language);
+                        $this->__embarazo($_POST, $language, $calculadoraId);
                     }
                     $cadenaH1Traduccion = 'calculadora-embarazo';
                     $this->view->dias = $this->__getDias();
                     $this->view->meses = $this->__getMeseslanguage($language);
                     $this->view->anios = $this->__getAnios('actualAnterior');
-                    $calculadoraId = CAL_EMBARAZO;
                     break;
                 case 'sexo-bebe';
+                    $calculadoraId = CAL_SEXO_BEBE;
                     if ($request->isPost()) {
-                        $this->__sexoBebe($_POST, $language, $t);
+                        $this->__sexoBebe($_POST, $language, $t, $calculadoraId);
                     }
                     $cadenaH1Traduccion = 'calculadora-sexo-bebe';
                     $this->view->meses = $this->__getMeseslanguage($language);
                     $this->view->anios = $this->__getEdadesSexoBebe();
                     $this->__setMovilAndPcForm($esMovil);
-                    $calculadoraId = CAL_SEXO_BEBE;
                     break;
                 case 'color-ojos-bebe';
+                    $calculadoraId = CAL_OJOS_BEBE;
                     if ($request->isPost()) {
-                        $this->__colorOjosBebe($_POST, $language, $t);
+                        $this->__colorOjosBebe($_POST, $language, $t, $calculadoraId);
                     }
                     $this->__setMovilAndPcForm($esMovil);
                     $cadenaH1Traduccion = 'calculadora-ojos-bebe';
                     $this->view->colorOjos = $this->__colorOjos();
-                    $calculadoraId = CAL_OJOS_BEBE;
                     break;
             }
             $this->ResultadosCalculadoras = new ResultadosCalculadoras();
@@ -65,8 +65,8 @@ class CalculadorasController extends ControllerBase
     /**
      * Lógica para calcular la fecha de embarazo
     */
-    private function __embarazo($post, $language) {
-        $mensajesError = $this->__comprobarFormEmbarazo($_POST);
+    private function __embarazo($post, $language, $calculadoraId) {
+        $mensajesError = $this->__comprobacionFormCalculadorasGenerico($_POST, $calculadoraId);
         if (empty($mensajesError)) {
             $fechaCompleta =  $_POST['anio-seleccion-regla'] . '-' . $_POST['mes-seleccion-regla'] . '-' . $_POST['dia-seleccion-regla'];
             if ($language == 'en') {
@@ -87,19 +87,11 @@ class CalculadorasController extends ControllerBase
         }
     }
 
-    private function __comprobarFormEmbarazo($post) {
-        $mensajes = [];
-        if (empty($post['dia-seleccion-regla']) || !is_numeric($post['dia-seleccion-regla'])) $mensajes[] = "error-fecha-dia";
-        if (empty($post['mes-seleccion-regla']) || !is_numeric($post['mes-seleccion-regla'])) $mensajes[] = "error-fecha-mes";
-        if (empty($post['anio-seleccion-regla']) || !is_numeric($post['anio-seleccion-regla'])) $mensajes[] = "error-fecha-anio";
-        return $mensajes;
-    }
-
     /**
     * Lógica para calcular el sexo del bebé
     */
-    private function __sexoBebe($post, $language, $t) {
-        $mensajesError = $this->__comprobarFormSexoBebe($_POST);
+    private function __sexoBebe($post, $language, $t, $calculadoraId) {
+        $mensajesError = $this->__comprobacionFormCalculadorasGenerico($_POST, $calculadoraId);
         if (empty($mensajesError)) {
             $this->CalendarioBebeChino2019 = new CalendarioBebeChino2019();
             $sexoBebe = $this->CalendarioBebeChino2019->getSexoBebe($_POST);
@@ -115,18 +107,11 @@ class CalculadorasController extends ControllerBase
         }
     }
 
-    private function __comprobarFormSexoBebe($post) {
-        $mensajes = [];
-        if (empty($post['tu-edad']) || !is_numeric($post['tu-edad'])) $mensajes[] = "error-tu-edad";
-        if (empty($post['mes-concepcion-bebe']) || !is_numeric($post['mes-concepcion-bebe'])) $mensajes[] = "error-mes-concepcion-bebe";
-        return $mensajes;
-    }
-
     /**
     * Lógica para calcular el sexo del bebé
     */
-    private function __colorOjosBebe($post, $language, $t) {
-        $mensajesError = $this->__comprobarFormColorOjosBebe($post);
+    private function __colorOjosBebe($post, $language, $t, $calculadoraId) {
+        $mensajesError = $this->__comprobacionFormCalculadorasGenerico($post, $calculadoraId);
         if (empty($mensajesError)) {
             $porcentajeMarron = 0;
             $porcentajeVerde = 0;
@@ -174,11 +159,32 @@ class CalculadorasController extends ControllerBase
             $this->view->mensajesError = $mensajesError;
         }
     }
-
-    private function __comprobarFormColorOjosBebe($post) {
+    
+    /**
+     * __comprobacionFormCalculadorasGenerico
+     *
+     * @param  mixed $post Los datos que vienen del form
+     * @param  mixed $calculadoraId
+     *
+     * @return void
+     */
+    private function __comprobacionFormCalculadorasGenerico($post, $calculadoraId) {
         $mensajes = [];
-        if (empty($post['color-ojos-mama'])) $mensajes[] = "error-color-ojos-mama";
-        if (empty($post['color-ojos-papa'])) $mensajes[] = "error-color-ojos-papa";
+        switch ($calculadoraId) {
+            case CAL_EMBARAZO:
+                if (empty($post['dia-seleccion-regla']) || !is_numeric($post['dia-seleccion-regla'])) $mensajes[] = "error-fecha-dia";
+                if (empty($post['mes-seleccion-regla']) || !is_numeric($post['mes-seleccion-regla'])) $mensajes[] = "error-fecha-mes";
+                if (empty($post['anio-seleccion-regla']) || !is_numeric($post['anio-seleccion-regla'])) $mensajes[] = "error-fecha-anio";
+                break;
+            case CAL_SEXO_BEBE:
+                if (empty($post['tu-edad']) || !is_numeric($post['tu-edad'])) $mensajes[] = "error-tu-edad";
+                if (empty($post['mes-concepcion-bebe']) || !is_numeric($post['mes-concepcion-bebe'])) $mensajes[] = "error-mes-concepcion-bebe";
+                break;
+            case CAL_OJOS_BEBE:
+                if (empty($post['color-ojos-mama'])) $mensajes[] = "error-color-ojos-mama";
+                if (empty($post['color-ojos-papa'])) $mensajes[] = "error-color-ojos-papa";
+                break;
+        }
         return $mensajes;
     }
     
@@ -229,37 +235,10 @@ class CalculadorasController extends ControllerBase
 
     private function __getDias() {
         $dias = [
-            '01' => 1,
-            '02' => 2,
-            '03' => 3,
-            '04' => 4,
-            '05' => 5,
-            '06' => 6,
-            '07' => 7,
-            '08' => 8,
-            '09' => 9,
-            '10' => 10,
-            '11' => 11,
-            '12' => 12,
-            '13' => 13,
-            '14' => 14,
-            '15' => 15,
-            '16' => 16,
-            '17' => 17,
-            '18' => 18,
-            '19' => 19,
-            '20' => 20,
-            '21' => 21,
-            '22' => 22,
-            '23' => 23,
-            '24' => 24,
-            '25' => 25,
-            '26' => 26,
-            '27' => 27,
-            '28' => 28,
-            '29' => 29,
-            '30' => 30,
-            '31' => 31
+            '01' => 1, '02' => 2, '03' => 3, '04' => 4, '05' => 5, '06' => 6, '07' => 7, '08' => 8, '09' => 9, '10' => 10,
+            '11' => 11, '12' => 12, '13' => 13, '14' => 14, '15' => 15, '16' => 16, '17' => 17, '18' => 18, '19' => 19, '20' => 20,
+            '21' => 21, '22' => 22, '23' => 23, '24' => 24, '25' => 25, '26' => 26, '27' => 27, '28' => 28, '29' => 29,
+            '30' => 30, '31' => 31
         ];
         return $dias;
     }
@@ -268,34 +247,16 @@ class CalculadorasController extends ControllerBase
         switch($language) {
             case 'es':
                 $meses = [
-                    '01' => 'Enero',
-                    '02' => 'Febrero',
-                    '03' => 'Marzo',
-                    '04' => 'Abril',
-                    '05' => 'Mayo',
-                    '06' => 'Junio',
-                    '07' => 'Julio',
-                    '08' => 'Agosto',
-                    '09' => 'Septiembre',
-                    '10' => 'Octubre',
-                    '11' => 'Noviembre',
+                    '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo', '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
+                    '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre', '10' => 'Octubre', '11' => 'Noviembre',
                     '12' => 'Diciembre'
                 ];
                 break;
             case 'en':
                 $meses = [
-                    '01' => 'January',
-                    '02' => 'February',
-                    '03' => 'March',
-                    '04' => 'April',
-                    '05' => 'May',
-                    '06' => 'June',
-                    '07' => 'July',
-                    '08' => 'August',
-                    '09' => 'September',
-                    '10' => 'October',
-                    '11' => 'November',
-                    '12' => 'December'
+                    '01' => 'January', '02' => 'February', '03' => 'March', '04' => 'April', '05' => 'May',
+                    '06' => 'June', '07' => 'July', '08' => 'August', '09' => 'September', '10' => 'October',
+                    '11' => 'November', '12' => 'December'
                 ];
                 break;
         }
@@ -304,33 +265,9 @@ class CalculadorasController extends ControllerBase
 
     private function __getEdadesSexoBebe() {
         $anios = [
-            '18' => 18,
-            '19' => 19,
-            '20' => 20,
-            '21' => 21,
-            '22' => 22,
-            '23' => 23,
-            '24' => 24,
-            '25' => 25,
-            '26' => 26,
-            '27' => 27,
-            '28' => 28,
-            '29' => 29,
-            '30' => 30,
-            '31' => 31,
-            '32' => 32,
-            '33' => 33,
-            '34' => 34,
-            '35' => 35,
-            '36' => 36,
-            '37' => 37,
-            '38' => 38,
-            '39' => 39,
-            '40' => 40,
-            '41' => 41,
-            '42' => 42,
-            '43' => 43,
-            '44' => 44
+            '18' => 18, '19' => 19, '20' => 20, '21' => 21, '22' => 22, '23' => 23, '24' => 24, '25' => 25, '26' => 26,
+            '27' => 27, '28' => 28, '29' => 29, '30' => 30, '31' => 31, '32' => 32, '33' => 33, '34' => 34, '35' => 35,
+            '36' => 36, '37' => 37, '38' => 38, '39' => 39, '40' => 40, '41' => 41, '42' => 42, '43' => 43,'44' => 44
         ];
         return $anios;
     }
