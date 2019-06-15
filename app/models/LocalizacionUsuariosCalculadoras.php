@@ -1,7 +1,5 @@
 <?php
 
-use Phalcon\Db\RawValue;
-
 class LocalizacionUsuariosCalculadoras extends \Phalcon\Mvc\Model
 {
 
@@ -144,7 +142,7 @@ class LocalizacionUsuariosCalculadoras extends \Phalcon\Mvc\Model
 
     public function beforeCreate()
 	{
-		$this->created = new RawValue('now()');
+		$this->created = date('Y-m-d H:i:s');
     }
 
     public function checkUsuarioCalIp($ip, $calculadoraId) {

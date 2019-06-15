@@ -5,7 +5,7 @@
 {{ form('' ~ formAction ~ '', 'method': 'post') }}
 
     {% if sexo is defined %}
-        <div class="notification notification--success aligner aligner--centerHoritzontal aligner--centerVertical">
+        <div class="text-center notification notification--success aligner aligner--centerHoritzontal aligner--centerVertical">
             <p>
                 {{ t._('sexo-bebe-resultado-1') }} {{ sexo }}
             </p>

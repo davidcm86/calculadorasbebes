@@ -42,6 +42,24 @@
         'edad-mama' => 'Mom\'s age',
         'mes-concepcion' => 'Month conception',
         'sexo' => 'Sex',
-        'resultado-otros-usuarios' => 'Results other users'
+        'resultado-otros-usuarios' => 'Results other users',
+        'calculadora-ojos-bebe' => 'Baby eyes color calculator',
+        'calculadora-ojos-bebe-texto-1' => 
+            'A recurring question in all moms and dads is knowing or trying to predict what color your baby\'s eyes will be.
+            With this calculator and two simple steps you can have an approximation of the eye color you will have. It can be calculated thanks
+            to the color of the eyes of the mother and father, knowing that combination can be approached to the color of the baby\'s eyes
+            ',
+        'color-ojos-form' => 'Choose an eye color',
+        'color-ojos-form-1' => 'Colored eyes mom',
+        'color-ojos-form-2' => 'Colored eyes dad',
+        'error-color-ojos-mama' => 'You must enter the color of the mother\'s eyes.',
+        'error-color-ojos-papa' => 'You must enter the color of dad\'s eyes.',
+        'color-ojos-resultado-1' => 'These are the odds of your baby\'s eye color. Blue. Brown. Green.',
+        'color-ojos-bebe-meta-title' => 'Baby eye color calculator. What color will your baby\'s eyes have?',
+        'color-ojos-bebe-meta-description' => 'The baby eye color calculator helps you figure out what color your baby\'s eyes will have by chance.',
+        'probabilidad' => 'Probability',
+        'marron' => 'Brown',
+        'verde' => 'Green',
+        'azul' => 'Blue'
     ];
 ?>

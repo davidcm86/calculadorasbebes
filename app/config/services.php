@@ -52,8 +52,10 @@ $di->setShared('view', function () {
             $volt->setOptions([
                 'compiledPath' => $config->application->cacheDir,
                 'compiledSeparator' => '_',
-                'compileAlways' => (ENVIRONMENT == 'development' ? true : false)
+                'compileAlways' => (ENVIRONMENT == 'development' ? true : false),
             ]);
+            $compiler = $volt->getCompiler();
+            $compiler->addFunction('strtotime', 'strtotime'); // añadimos la funcion strtotime a volt para formatear el data
             return $volt;
         },
         '.phtml' => PhpEngine::class

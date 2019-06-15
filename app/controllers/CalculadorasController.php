@@ -40,9 +40,9 @@ class CalculadorasController extends ControllerBase
                     $calculadoraId = CAL_SEXO_BEBE;
                     break;
                 case 'color-ojos-bebe';
-                    /*if ($request->isPost()) {
-                        $this->__sexoBebe($_POST, $language, $t);
-                    }*/
+                    if ($request->isPost()) {
+                        $this->__colorOjosBebe($_POST, $language, $t);
+                    }
                     $this->__setMovilAndPcForm($esMovil);
                     $cadenaH1Traduccion = 'calculadora-ojos-bebe';
                     $this->view->colorOjos = $this->__colorOjos();
@@ -121,6 +121,67 @@ class CalculadorasController extends ControllerBase
         if (empty($post['mes-concepcion-bebe']) || !is_numeric($post['mes-concepcion-bebe'])) $mensajes[] = "error-mes-concepcion-bebe";
         return $mensajes;
     }
+
+    /**
+    * Lógica para calcular el sexo del bebé
+    */
+    private function __colorOjosBebe($post, $language, $t) {
+        $mensajesError = $this->__comprobarFormColorOjosBebe($post);
+        if (empty($mensajesError)) {
+            $porcentajeMarron = 0;
+            $porcentajeVerde = 0;
+            $porcentajeAzul = 0;
+            if ($post['color-ojos-mama'] == 'marron' && $post['color-ojos-papa'] == 'marron') {
+                $porcentajeMarron = 75;
+                $porcentajeVerde = 18.75;
+                $porcentajeAzul = 6.25;
+            } else if ($post['color-ojos-mama'] == 'marron' && $post['color-ojos-papa'] == 'verde' 
+                || $post['color-ojos-papa'] == 'marron' && $post['color-ojos-mama'] == 'verde') {
+                $porcentajeMarron = 50;
+                $porcentajeVerde = 37.5;
+                $porcentajeAzul = 12.5;
+            } else if ($post['color-ojos-mama'] == 'marron' && $post['color-ojos-papa'] == 'azul' || 
+                $post['color-ojos-papa'] == 'marron' && $post['color-ojos-mama'] == 'azul') {
+                $porcentajeMarron = 50;
+                $porcentajeAzul = 50;
+            } else if ($post['color-ojos-mama'] == 'verde' && $post['color-ojos-papa'] == 'verde') {
+                $porcentajeMarron = '<1';
+                $porcentajeVerde = 75;
+                $porcentajeAzul = 25;
+            } else if ($post['color-ojos-mama'] == 'verde' && $post['color-ojos-papa'] == 'azul' || 
+                $post['color-ojos-papa'] == 'verde' && $post['color-ojos-mama'] == 'azul') {
+                $porcentajeMarron = 0;
+                $porcentajeVerde = 50;
+                $porcentajeAzul = 50;
+            } else if ($post['color-ojos-mama'] == 'azul' && $post['color-ojos-papa'] == 'azul') {
+                $porcentajeMarron = 0;
+                $porcentajeVerde = 1;
+                $porcentajeAzul = 99;
+            }
+            $dataEncode['color_ojos_mama'] = $post['color-ojos-mama'];
+            $dataEncode['color_ojos_papa'] = $post['color-ojos-papa'];
+            $data['data-serialize'] = json_encode($dataEncode);
+            $dataResultEncode['marron'] = $porcentajeMarron;
+            $dataResultEncode['verde'] = $porcentajeVerde;
+            $dataResultEncode['azul'] = $porcentajeAzul;
+            $data['result-serialize'] = json_encode($dataResultEncode);
+            $this->__salvarIpAndResultadoCalculadora($language, CAL_OJOS_BEBE, $data);
+            $_POST = [];
+            $this->view->marron = $porcentajeMarron;
+            $this->view->verde = $porcentajeVerde;
+            $this->view->azul = $porcentajeAzul;
+        } else {
+            $this->view->mensajesError = $mensajesError;
+        }
+    }
+
+    private function __comprobarFormColorOjosBebe($post) {
+        $mensajes = [];
+        if (empty($post['color-ojos-mama'])) $mensajes[] = "error-color-ojos-mama";
+        if (empty($post['color-ojos-papa'])) $mensajes[] = "error-color-ojos-papa";
+        return $mensajes;
+    }
+    
 
     /**
      * Salvamos la ip y localización del usuario y la data y el resul de su form
@@ -319,16 +380,17 @@ class CalculadorasController extends ControllerBase
         switch ($calculadoraId) {
             case CAL_EMBARAZO;
                 foreach ($data as $key => $field) {
+                    $data[$key]['created'] = date('Y-m-d', strtotime($field['created']));
                     if ($language != 'en') $data[$key]['created'] = date('d-m-Y', strtotime($field['created']));
                     $data[$key]['result'] = json_decode($field['result']);
                     if ($language == 'en') $data[$key]['result'] = date('Y-m-d', strtotime($data[$key]['result']));
                     $ultimaRegla = json_decode($field['data']);
                     $data[$key]['data'] = $ultimaRegla->fecha_ultima_regla;
                 }
-                $datos = json_decode(json_encode($data), FALSE);
                 break;
             case CAL_SEXO_BEBE;
                 foreach ($data as $key => $field) {
+                    $data[$key]['created'] = date('Y-m-d', strtotime($field['created']));
                     if ($language != 'en') $data[$key]['created'] = date('d-m-Y', strtotime($field['created']));
                     $data[$key]['result'] = $t->_(json_decode($field['result']));
                     $dataIntroducido = json_decode($field['data']);
@@ -336,9 +398,23 @@ class CalculadorasController extends ControllerBase
                     $meses = $this->__getMeseslanguage($language);
                     $data[$key]['mes_concepcion_bebe'] = $meses[$dataIntroducido->mes_concepcion_bebe];
                 }
-                $datos = json_decode(json_encode($data), FALSE);
+                break;
+            case CAL_OJOS_BEBE;
+                foreach ($data as $key => $field) {
+                    $data[$key]['created'] = date('Y-m-d', strtotime($field['created']));
+                    if ($language != 'en') $data[$key]['created'] = date('d-m-Y', strtotime($field['created']));
+                    $resultData = json_decode($field['result']);
+                    $data[$key]['marron'] = $resultData->marron;
+                    $data[$key]['verde'] = $resultData->verde;
+                    $data[$key]['azul'] = $resultData->azul;
+                    $dataIntroducido = json_decode($field['data']);
+                    $data[$key]['color_ojos_mama'] = $t->_($dataIntroducido->color_ojos_mama);
+                    $data[$key]['color_ojos_papa'] = $t->_($dataIntroducido->color_ojos_papa);
+                }
                 break;
         }
+        // volvemos al objeto para que VOLT pueda renderizar el resultado
+        $datos = json_decode(json_encode($data), FALSE);
         return $datos;
     }
 

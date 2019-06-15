@@ -4,11 +4,24 @@
 <h1 class="aligner aligner--centerHoritzontal aligner--centerVertical">{{ t._('calculadora-ojos-bebe') }}</h1>
 {{ form('' ~ formAction ~ '', 'method': 'post') }}
 
-    {% if colorOjosResult is defined %}
-        <div class="notification notification--success aligner aligner--centerHoritzontal aligner--centerVertical">
+    {% if marron is defined %}
+        <div class="text-center notification notification--success aligner aligner--centerHoritzontal aligner--centerVertical">
             <p>
-                {{ t._('embarazada-resultado-1') }}{{ fechaPrevistaParto }}
+                {{ t._('color-ojos-resultado-1') }}
             </p>
+        </div>
+        <div class="container">
+            <div class="row">
+                    <div class="col background-azul notification aligner aligner--centerHoritzontal aligner--centerVertical">
+                        <p>{{ azul }} %</p>
+                    </div>
+                    <div class="col background-marron notification aligner aligner--centerHoritzontal aligner--centerVertical">
+                        <p>{{ marron }} %</p>
+                    </div>
+                    <div class="col background-verde notification aligner aligner--centerHoritzontal aligner--centerVertical">
+                        <p>{{ verde }} %</p>
+                    </div>
+            </div>
         </div>
     {% endif %}
 
@@ -30,7 +43,7 @@
             {{ select("color-ojos-mama", colorOjos, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': t._('color-ojos-form-1')) }}
         </div>
         <div class="{{ class }}">
-            {{ select("color-ojos-padre", colorOjos, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': t._('color-ojos-form-2')) }}
+            {{ select("color-ojos-papa", colorOjos, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': t._('color-ojos-form-2')) }}
         </div>
     </div>
 

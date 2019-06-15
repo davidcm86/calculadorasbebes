@@ -2449,4 +2449,16 @@ h2 {
   text-align: center;
 }
 
+.background-azul {
+  background: #3ad7ff;
+}
+
+.background-verde {
+  background: #34bc6b;
+}
+
+.background-marron {
+  background: #804000;
+}
+
 /*# sourceMappingURL=layout.css.map */
