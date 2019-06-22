@@ -1,3 +1,4 @@
+<hr class="style-two">
 <div class="row">
     <div class="col-sm-4 aligner aligner--centerHoritzontal aligner--centerVertical">
         <div class="select select-fullWidth">
@@ -5,6 +6,5 @@
         </div>
     </div>
     <div class="col-sm-8 aligner aligner--centerHoritzontal aligner--centerVertical">
-
     </div>
 </div>

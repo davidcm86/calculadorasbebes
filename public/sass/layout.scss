@@ -16,10 +16,15 @@ $color-letra-heading: #7656F7;
 .button { padding: 7px 50px }
 h1 { color: $color-letra-heading; font-weight:bold; font-size: 1.6em; padding-top: 5px; padding-bottom: 5px; }
 h2 { color: $color-letra-heading; font-weight:bold; font-size: 1.2em; padding-top: 5px; padding-bottom: 5px; }
-h2 { color: $color-letra-heading; font-size: 1.0em; padding-top: 5px; padding-bottom: 5px; }
+h2.h2-calculadora-index { color: $color-letra-heading; font-size: 1.1em; padding-top: 5px; padding-bottom: 5px; }
 .contenedor-estadisticas { background: #f2d4fc; padding: 10px; border-radius: 10px; margin: 5px; }
 .formulario-label { font-weight:bold; color: #a52f2f; background-color: #f9f0ff; border-radius: 5px; margin-bottom: 3px; text-align: center;}
 .background-azul { background: #3ad7ff; }
 .background-verde { background: #34bc6b; }
 .background-marron { background: #804000; }
-
+hr.style-two {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+.calculadora-index-imagen { background-color:#eaeafc; border-radius: 30%; }
