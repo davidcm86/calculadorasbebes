@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-sm-12 aligner aligner--centerHoritzontal aligner--centerVertical">
                     <a href="{{ '/' ~ lang ~ '/' ~ calculadora.slug ~ '' }}">
-                        {{ image("" ~ calculadora.ruta_imagen ~ "", "alt": "" ~ calculadora.nombre_calculadora ~ "", "width": "102", "class": "calculadora-index-imagen") }}
+                        {{ image("" ~ calculadora.ruta_imagen ~ "", "alt": "" ~ calculadora.nombre_calculadora ~ "", "width": "102") }}
                     </a>
                 </div>
             </div>
