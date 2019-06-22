@@ -1,6 +1,6 @@
 <div class="row">
     {%for calculadora in calculadoras%}
-        <div class="col-sm-4 aligner aligner--centerHoritzontal aligner--centerVertical">
+        <div class="col-sm-4 aligner aligner--centerHoritzontal aligner--centerVertical fondo-calculadoras-index">
             <div class="container">
                 <div class="col-sm-12 aligner aligner--centerHoritzontal aligner--centerVertical">
                     <h2 class="h2-calculadora-index">{{ link_to('/' ~ lang ~ '/' ~ calculadora.slug ~ '', calculadora.nombre_calculadora) }}</h2>
