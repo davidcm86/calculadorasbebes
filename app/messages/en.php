@@ -77,6 +77,8 @@
         'error-semana' => 'You must choose your pregnancy week.',
         'peso-bebe-resultado-1' => 'Your baby\'s weight should be close to the: ',
         'gramos' => 'Grams',
-        'peso' => 'Weight'
+        'peso' => 'Weight',
+        'peso-bebe-meta-title' => 'Baby weight calculator',
+        'peso-bebe-meta-description' => 'Use the baby\'s weight calculator to know if your baby is at the correct weight depending on the week of pregnancy.'
     ];
 ?>

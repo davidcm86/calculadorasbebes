@@ -77,6 +77,8 @@
         'error-semana' => 'Debes elegir tu semana de embarazo.',
         'peso-bebe-resultado-1' => 'El peso de su bebé debería estar cerca de los: ',
         'gramos' => 'Gramos',
-        'peso' => 'Peso'
+        'peso' => 'Peso',
+        'peso-bebe-meta-title' => 'Calculadora peso del bebé',
+        'peso-bebe-meta-description' => 'Utiliza la calculadora de peso del bebé para saber si tu bebé está en el peso correcto dependiendo de la semana de embarazo.'
     ];
 ?>
