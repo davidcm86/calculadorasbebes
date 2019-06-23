@@ -8,6 +8,7 @@ defined('APP_PATH') || define('APP_PATH', BASE_PATH . '/app');
 defined('CAL_EMBARAZO') || define('CAL_EMBARAZO', '1');
 defined('CAL_SEXO_BEBE') || define('CAL_SEXO_BEBE', '2');
 defined('CAL_OJOS_BEBE') || define('CAL_OJOS_BEBE', '3');
+defined('CAL_PESO_BEBE') || define('CAL_PESO_BEBE', '4');
 
 return new \Phalcon\Config([
     'database' => [

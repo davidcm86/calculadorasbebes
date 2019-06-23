@@ -48,6 +48,14 @@ class CalculadorasController extends ControllerBase
                     $cadenaH1Traduccion = 'calculadora-ojos-bebe';
                     $this->view->colorOjos = $this->__colorOjos();
                     break;
+                case 'peso-bebe';
+                    $calculadoraId = CAL_PESO_BEBE;
+                    if ($request->isPost()) {
+                        $this->__pesoBebe($_POST, $language, $t, $calculadoraId);
+                    }
+                    $this->view->semanas = $this->__getSemanasGestacion();
+                    $cadenaH1Traduccion = 'calculadora-peso-bebe';
+                    break;
             }
             $this->ResultadosCalculadoras = new ResultadosCalculadoras();
             $this->view->estadisticasCalculadora = $this->__formatearResult($this->ResultadosCalculadoras->getEstadisticas($calculadoraId), $calculadoraId, $t, $language);
@@ -159,6 +167,30 @@ class CalculadorasController extends ControllerBase
             $this->view->mensajesError = $mensajesError;
         }
     }
+
+    /**
+     * Lógica para calcular el peso del bebé
+     */
+    public function __pesoBebe($post, $language, $t, $calculadoraId) {
+        $mensajesError = $this->__comprobacionFormCalculadorasGenerico($post, $calculadoraId);
+        if (empty($mensajesError)) {
+            $dataEncode['semana'] = $post['semana'];
+            $data['data-serialize'] = json_encode($dataEncode);
+            $semanasPeso = [
+                '11' => 8, '12' => 14, '13' => 20, '14' => 40, '15' => 65, '16' => 85, '17' => 110, '18' => 150, '19' => 190,
+                '20' => 240, '21' => 300, '22' => 360, '23' => 430, '24' => 600, '25' => 680, '26' => 780, '27' => 900, '28' => 1050,
+                '29' => 1180, '30' => 1250, '31' => 1400, '32' => 1600, '33' => 1750, '34' => 2000, '35' => 2250, '36' => 2500, 
+                '37' => 2800, '38' => 3000, '39' => 3200, '40' => 3400
+            ];
+            $dataResultEncode['peso'] = $semanasPeso[$post['semana']];
+            $data['result-serialize'] = json_encode($dataResultEncode);
+            $this->__salvarIpAndResultadoCalculadora($language, CAL_PESO_BEBE, $data);
+            $_POST = [];
+            $this->view->peso = $semanasPeso[$post['semana']];
+        } else {
+            $this->view->mensajesError = $mensajesError;
+        }
+    }
     
     /**
      * __comprobacionFormCalculadorasGenerico
@@ -183,6 +215,9 @@ class CalculadorasController extends ControllerBase
             case CAL_OJOS_BEBE:
                 if (empty($post['color-ojos-mama'])) $mensajes[] = "error-color-ojos-mama";
                 if (empty($post['color-ojos-papa'])) $mensajes[] = "error-color-ojos-papa";
+                break;
+            case CAL_PESO_BEBE:
+                if (empty($post['semana'])) $mensajes[] = "error-semana";
                 break;
         }
         return $mensajes;
@@ -272,6 +307,13 @@ class CalculadorasController extends ControllerBase
         return $anios;
     }
 
+    private function __getSemanasGestacion() {
+        for ($i = 11; $i < 41; $i++) {
+            $semanas[$i] = $i;
+        }
+        return $semanas;
+    }
+
     /**
      * Para los diferentes slugs de las calculadoras, agrupamos la vista que se muestra para cada calculadora sabiendo que renderizar,
      * debido a distintos idiomas.
@@ -282,12 +324,14 @@ class CalculadorasController extends ControllerBase
             'es' => [
                 'embarazo' => 'calculadora-del-embarazo',
                 'sexo-bebe' => 'calculadora-sexo-bebe',
-                'color-ojos-bebe' => 'calculadora-color-ojos-bebe'
+                'color-ojos-bebe' => 'calculadora-color-ojos-bebe',
+                'peso-bebe' => 'calculadora-peso-bebe'
             ],
             'en' => [
                 'embarazo' => 'pregnancy-calculator',
                 'sexo-bebe' => 'baby-sex-calculator',
-                'color-ojos-bebe' => 'baby-eyes-color-calculator'
+                'color-ojos-bebe' => 'baby-eyes-color-calculator',
+                'peso-bebe' => 'baby-weight-calculator'
             ],
         ];
         $vistaRenderizar = array_search($slug, $slugsArray[$language]);
@@ -347,6 +391,16 @@ class CalculadorasController extends ControllerBase
                     $dataIntroducido = json_decode($field['data']);
                     $data[$key]['color_ojos_mama'] = $t->_($dataIntroducido->color_ojos_mama);
                     $data[$key]['color_ojos_papa'] = $t->_($dataIntroducido->color_ojos_papa);
+                }
+                break;
+            case CAL_PESO_BEBE;
+                foreach ($data as $key => $field) {
+                    $data[$key]['created'] = date('Y-m-d', strtotime($field['created']));
+                    if ($language != 'en') $data[$key]['created'] = date('d-m-Y', strtotime($field['created']));
+                    $resultData = json_decode($field['result']);
+                    $data[$key]['peso'] = $resultData->peso;
+                    $dataIntroducido = json_decode($field['data']);
+                    $data[$key]['semana'] = $dataIntroducido->semana;
                 }
                 break;
         }

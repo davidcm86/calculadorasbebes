@@ -60,6 +60,23 @@
         'probabilidad' => 'Probabilidad',
         'marron' => 'Marrón',
         'verde' => 'Verde',
-        'azul' => 'Azúl'
+        'azul' => 'Azúl',
+        'calculadora-peso-bebe' => 'Calculadora peso del bebé',
+        'calculadora-peso-bebe-texto-1' => 
+            '¿Te gustaría saber cuánto tendría que pesar tu bebé en el embarazo?. Es una pregunta muy común entre las embarazadas,
+            ya que la salud de tu bebé va muy ligada al peso que este tiene durante el embarazo.
+            ',
+        'calculadora-peso-bebe-texto-2' => 
+            'Para seguir el peso del bebé, se deben hacer ecografías entre 2 o 3 semanas, de esta manera se tendrá un peso bastante 
+            exacto del bebé. Aunque el tiempo entre ecografías lo dictara el médico. Si el bebé se encuentra con una buena salud las 
+            ecografías  no se harán tan frecuentemente.
+            ',
+        'semana' => 'Semana',
+        'semana-select' => 'Semana del embarazo',
+        'peso-bebe-form' => 'Elige tu semana de embarazo',
+        'error-semana' => 'Debes elegir tu semana de embarazo.',
+        'peso-bebe-resultado-1' => 'El peso de su bebé debería estar cerca de los: ',
+        'gramos' => 'Gramos',
+        'peso' => 'Peso'
     ];
 ?>

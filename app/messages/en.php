@@ -60,6 +60,23 @@
         'probabilidad' => 'Probability',
         'marron' => 'Brown',
         'verde' => 'Green',
-        'azul' => 'Blue'
+        'azul' => 'Blue',
+        'calculadora-peso-bebe' => 'Baby weight calculator',
+        'calculadora-peso-bebe-texto-1' => 
+            'Would you like to know how much your baby should weigh in pregnancy? It is a very common question among pregnant women, 
+            since the health of your baby is closely linked to the weight it has during pregnancy.
+            ',
+        'calculadora-peso-bebe-texto-2' => 
+            'To follow the baby\'s weight, ultrasound scans should be done between 2 or 3 weeks, in this way you will have a fairly heavy weight 
+            exact of the baby. Although the time between ultrasounds is dictated by the doctor. If the baby is in good health, 
+            Ultrasounds will not be done so frequently..
+            ',
+        'semana' => 'Week',
+        'semana-select' => 'Pregnancy week',
+        'peso-bebe-form' => 'Choose your pregnancy week',
+        'error-semana' => 'You must choose your pregnancy week.',
+        'peso-bebe-resultado-1' => 'Your baby\'s weight should be close to the: ',
+        'gramos' => 'Grams',
+        'peso' => 'Weight'
     ];
 ?>
