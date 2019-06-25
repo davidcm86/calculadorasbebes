@@ -12,6 +12,30 @@ use Phalcon\Logger;
 use Phalcon\Logger\Adapter\File as LogFileAdapter;
 use Phalcon\Breadcrumbs;
 use \Mobile_Detect;
+use Phalcon\Cache\Frontend\Data as FrontendData;
+use Phalcon\Cache\Backend\Memcache as BackendMemcache;
+
+// Set the models cache service
+$di->set(
+    'modelsCache',
+    function () {
+        // Cache data for one day (default setting)
+        $frontCache = new FrontendData(
+            [
+                'lifetime' => 86400,
+            ]
+        );
+        // Memcached connection settings
+        $cache = new BackendMemcache(
+            $frontCache,
+            [
+                'host' => 'localhost',
+                'port' => '11211',
+            ]
+        );
+        return $cache;
+    }
+);
 
 $di->setShared('Mobile_Detect', function () {
     return new Mobile_Detect;
