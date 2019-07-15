@@ -7,6 +7,15 @@ use Phalcon\Http\Request;
 class CalculadorasController extends ControllerBase
 {
     public function indexAction() {
+        $this->assets->addJs('js/jquery.3.0.0.min.js');
+        $this->assets->addJs('js/jquery.modal.min.js');
+
+        // TODO: ponemos o no una session hasta que lo hagamos mediante el plugin de user login
+        $usuarioLoginRegistroResultados = '#ex1';
+        if ($this->session->has('Usuario')) {
+            $usuarioLoginRegistroResultados = 'ver-mas';
+        }
+        $this->view->usuarioLoginRegistroResultados = $usuarioLoginRegistroResultados;
         $esMovil = false;
         if ($this->Mobile_Detect->isMobile()) $esMovil = true;
         $slug = $this->dispatcher->getParam('slug');
@@ -361,18 +370,19 @@ class CalculadorasController extends ControllerBase
         switch ($calculadoraId) {
             case CAL_EMBARAZO;
                 foreach ($data as $key => $field) {
-                    $data[$key]['created'] = date('Y-m-d', strtotime($field['created']));
-                    if ($language != 'en') $data[$key]['created'] = date('d-m-Y', strtotime($field['created']));
+                    $data[$key]['created'] = date('Y-m-d H:i:s', strtotime($field['created']));
+                    if ($language != 'en') $data[$key]['created'] = date('d-m-Y H:i:s', strtotime($field['created']));
                     $data[$key]['result'] = json_decode($field['result']);
                     if ($language == 'en') $data[$key]['result'] = date('Y-m-d', strtotime($data[$key]['result']));
                     $ultimaRegla = json_decode($field['data']);
                     $data[$key]['data'] = $ultimaRegla->fecha_ultima_regla;
+                    if ($language != 'en') $data[$key]['data'] = date('d-m-Y', strtotime($ultimaRegla->fecha_ultima_regla));
                 }
                 break;
             case CAL_SEXO_BEBE;
                 foreach ($data as $key => $field) {
-                    $data[$key]['created'] = date('Y-m-d', strtotime($field['created']));
-                    if ($language != 'en') $data[$key]['created'] = date('d-m-Y', strtotime($field['created']));
+                    $data[$key]['created'] = date('Y-m-d H:i:s', strtotime($field['created']));
+                    if ($language != 'en') $data[$key]['created'] = date('d-m-Y H:i:s', strtotime($field['created']));
                     $data[$key]['result'] = $t->_(json_decode($field['result']));
                     $dataIntroducido = json_decode($field['data']);
                     $data[$key]['edad_mama'] = $dataIntroducido->edad_mama;
@@ -382,8 +392,8 @@ class CalculadorasController extends ControllerBase
                 break;
             case CAL_OJOS_BEBE;
                 foreach ($data as $key => $field) {
-                    $data[$key]['created'] = date('Y-m-d', strtotime($field['created']));
-                    if ($language != 'en') $data[$key]['created'] = date('d-m-Y', strtotime($field['created']));
+                    $data[$key]['created'] = date('Y-m-d H:i:s', strtotime($field['created']));
+                    if ($language != 'en') $data[$key]['created'] = date('d-m-Y H:i:s', strtotime($field['created']));
                     $resultData = json_decode($field['result']);
                     $data[$key]['marron'] = $resultData->marron;
                     $data[$key]['verde'] = $resultData->verde;

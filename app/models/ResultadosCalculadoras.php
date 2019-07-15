@@ -103,7 +103,7 @@ class ResultadosCalculadoras extends \Phalcon\Mvc\Model
     }
 
     public function getEstadisticas($calculadoraId) {
-        $phql = "SELECT * FROM ResultadosCalculadoras WHERE calculadora_id = $calculadoraId ORDER BY created DESC LIMIT 10";
+        $phql = "SELECT * FROM ResultadosCalculadoras WHERE calculadora_id = $calculadoraId ORDER BY created DESC LIMIT 4";
         $manager = $this->modelsManager;
         $query = $manager->createQuery($phql);
         $query->cache(

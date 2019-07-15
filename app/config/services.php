@@ -180,6 +180,7 @@ $di->setShared('assets', function() {
     ->setTargetPath('css/layout.min.css')
     ->setTargetUri('css/layout.min.css')
     ->addCss('css/layout.css')
+    ->addCss('css/jquery.modal.min.css')
     ->addFilter(new Phalcon\Assets\Filters\Cssmin());
     return $manager;
 });
@@ -197,3 +198,11 @@ $di->set("logger", function () {
 $di->setShared('Breadcrumbs', function () {
     return new Breadcrumbs;
 });
+
+// Plugins
+$di->set(
+    'AuthPlugin',
+    function() {
+        $AuthPlugin = new AuthPlugin;
+        return $AuthPlugin;
+}); 

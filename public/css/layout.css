@@ -2406,6 +2406,11 @@ input:-webkit-autofill {
   margin-top: 10px;
 }
 
+.btn-mas-resultados {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
 .button {
   padding: 7px 50px;
 }
@@ -2469,6 +2474,10 @@ hr.style-two {
 
 .fondo-calculadoras-index {
   background-color: #f2f2ff;
+}
+
+#notification-ajax-login {
+  display: none;
 }
 
 /*# sourceMappingURL=layout.css.map */

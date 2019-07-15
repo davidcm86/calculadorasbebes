@@ -13,8 +13,8 @@ class IndexController extends ControllerBase
         );
         $query->cache(
             [
-                'key'      => 'calculadoras-index',
-                'lifetime' => 3600,
+                'key'      => 'calculadoras-index-' . $lang,
+                'lifetime' => 3600
             ]
         );
         $calculadoras = $query->execute([
