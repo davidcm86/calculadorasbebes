@@ -8,7 +8,8 @@ $loader = new \Phalcon\Loader();
 $loader->registerDirs(
     [
         $config->application->controllersDir,
-        $config->application->modelsDir
+        $config->application->modelsDir,
+        $config->application->pluginsDir,
     ]
 );
 if (file_exists(BASE_PATH . '/app/vendor/autoload.php')) {    

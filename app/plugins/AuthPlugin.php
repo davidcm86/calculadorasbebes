@@ -93,7 +93,7 @@ class AuthPlugin extends Plugin
                 if ($mandarEmailActivacion) $this->__mandarEmailActivacionCuenta($user->email);
             } else {
                 $this->logger->error('Error inesperado al hacer login');
-                $return['errores'][] = 'Email o contraseÃ±a incorrectos';
+                $return['errores'][] = 'Email o contraseña incorrectos';
             }
         }
         return $return;
@@ -101,29 +101,34 @@ class AuthPlugin extends Plugin
     
     public function login($data, $procedencia = null)
 	{
+        $this->logger->info('a');
         if (empty($procedencia)) {
+            $this->logger->info('b');
             $return = array();
             $validation = new Validation();
             $validation->add('email',new PresenceOf(['message' => 'El email es requerido']));
             $validation->add('email', new Email(['message' => 'El email no es válido']));
             $messages = $validation->validate($_POST);
+            $this->logger->info('c');
             if (count($messages)) {
                 foreach ($messages as $message) {
                     $return['errores'][] = $message->getMessage();
                 }
             } else {
+                $this->logger->info('d');
                 $usuarios = new Usuarios();
                 $parameters = ["email = '".$data['email']."' AND password = '".md5($data['password'])."'"];
                 $usuario = $usuarios::findFirst($parameters);
-                // solo si el usuario viene con registro web, se le hace el chequeo de si está activo, con redes sociales no hace falta
-                if ($usuario->fuente_registro == 'web' && $usuario->activado == 0) {
-                    $return['errores'][] = 'Debes activar tu cuenta con el email que te hemos mandado. </br> Si no lo encuentras <a href="">accede aquÃ­</a> para reenviartelo de nuevo.';
+                $this->logger->info('e');
+                if ($usuario) {
+                    $this->logger->info('f');
+                    $this->__setSessionLoginUsuario($usuario);
+                    $this->logger->info('g');
+                    $return['status'] = 'ok';
                 } else {
-                    if ($usuario) {
-                        $this->__setSessionLoginUsuario($usuario);
-                    } else {
-                        $return['errores'][] = 'Email o contraseÃ±a incorrectos';
-                    }
+                    $this->logger->info('h');
+                    $return['status'] = 'error';
+                    $return['errores'][] = 'Email o contraseña incorrectos';
                 }
             }
         } elseif ($procedencia == 'google') {
@@ -133,9 +138,10 @@ class AuthPlugin extends Plugin
             if ($usuario) {
                 $this->__setSessionLoginUsuario($usuario);
             } else {
-                $return['errores'][] = 'Email o contraseÃ±a incorrectos';
+                $return['errores'][] = 'Email o contraseña incorrectos';
             }
         }
+        $this->logger->info('devolvemos el temario');
         return $return;
     }
     
@@ -218,7 +224,7 @@ class AuthPlugin extends Plugin
             if ($usuario->activado == 1) {
                 $tokenUsuariosModel = new TokenUsuarios();
                 $tokenGenerado = $tokenUsuariosModel->generarToken(1, $usuario->id);
-                $return['errores'][] = "Te hemos enviado un email para restablecer tu contraseÃ±a a la direcciÃ³n de correo: " . $usuario->email;           
+                $return['errores'][] = "Te hemos enviado un email para restablecer tu contraseña a la direcciÃ³n de correo: " . $usuario->email;           
                 $dataEmail = [
                     'urlRestablecerPassword' => DOMINIO . '/usuarios/restablecer-password/' . $tokenGenerado . '/' . $this->CommonPlugin->encriptar($usuario->id)
                 ];

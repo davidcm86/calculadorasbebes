@@ -5,18 +5,30 @@ use Phalcon\Translate\Adapter\NativeArray;
 use Phalcon\Http\Request\Exception;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Http\Response;
+use Phalcon\Http\Request;
+
 
 class ControllerBase extends Controller
 {
     public function initialize()
     {
         $this->view->t = $this->_getTranslation();
+        // Get the Http-X-Requested-With header
+        /*$requestedWith = $this->request->getHeader('HTTP_X_REQUESTED_WITH');
+        $this->logger->info('$requestedWith: ' . $requestedWith);
+        if ($requestedWith === 'XMLHttpRequest') {
+            $this->logger->info('ajax');
+            $this->view->setTemplateAfter('ajax');
+            $this->view->setRenderLevel(\Phalcon\Mvc\View::LEVEL_LAYOUT);
+        } else {
+            $this->logger->info('common');
+            $this->view->setTemplateAfter('common');
+        }*/
         $this->view->setTemplateAfter('common');
         $this->view->dominioPhp = DOMINIO; // así podemos pintar la variable en volt, con los tag de php no lo coge
         $this->view->lang = $this->dispatcher->getParam('language');
         $this->view->languages = ['en' => 'English', 'es' => 'Español'];
         $this->tag->setDefault('select-language', $this->view->lang);
-        $this->assets->addJs('js/common.js');
         if (empty($this->dispatcher->getParam('language'))) {
             $this->view->language = $this->request->getBestLanguage();
         } else {

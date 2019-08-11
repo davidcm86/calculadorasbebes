@@ -12,26 +12,31 @@ function changeLanguage() {
  * Evento login ajax
  */
 document.getElementById('login-ajax').onclick=function(){
+    document.getElementById("notification-ajax-login").style.display = "none";
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
     var errores = erroresLogin(email, password);
     $('#notification-ajax-login').empty();
     $('#notification-ajax-login').hide();
     if (errores.length == 0) {
-        /*var xhr = new XMLHttpRequest();
-        var ajax_url = "/usuarios/login";
-        // Definimos los parámetros que vamos a enviar
-        var params = "parametro=valor&otro_parametro=otro_valor";
-
-        // Creamos un nuevo objeto encargado de la comunicación
-        var ajax_request = new XMLHttpRequest();
-
-        // Definimos como queremos realizar la comunicación
-        ajax_request.open( "POST", ajax_url, true );
-        // Ponemos las cabeceras de la solicitud como si fuera un formulario, necesario si se utiliza POST
-        ajax_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        //Enviamos la solicitud junto con los parámetros
-        ajax_request.send( params );*/
+        var r = new XMLHttpRequest();
+        r.open("POST", "/usuarios/loginAjax", true);
+        r.onreadystatechange = function () {
+        if (r.readyState != 4 || r.status != 200) return;
+            var data = JSON.parse(r.responseText);
+            if (data['status'] == 'error') {
+                console.log(data['errores']);
+                document.getElementById("notification-ajax-login").text = '';
+                document.getElementById("notification-ajax-login").style.display = "block";
+                var elem = document.querySelector('#notification-ajax-login');
+                elem.textContent = data['errores'];
+            } else {
+                // TODO: redirección a la página que estaba pero ya con login
+            }
+        };
+        r.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        r.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+        r.send("email="+email+"&password="+password);
     } else {
         $('#notification-ajax-login').show();
         $('#notification-ajax-login').html(errores);

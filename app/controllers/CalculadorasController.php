@@ -7,8 +7,10 @@ use Phalcon\Http\Request;
 class CalculadorasController extends ControllerBase
 {
     public function indexAction() {
-        $this->assets->addJs('js/jquery.3.0.0.min.js');
+        $this->assets->addJs('js/jquery.3.4.1.min.js');
+        $this->assets->addJs('js/common.js');
         $this->assets->addJs('js/jquery.modal.min.js');
+        
 
         // TODO: ponemos o no una session hasta que lo hagamos mediante el plugin de user login
         $usuarioLoginRegistroResultados = '#ex1';

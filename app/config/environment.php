@@ -1,6 +1,5 @@
 <?php
     define('ENVIRONMENT', isset($_SERVER['APPLICATION_ENV']) ? $_SERVER['APPLICATION_ENV'] : 'development');
-
     $variableEntorno = (ENVIRONMENT == 'development') ? 1 : -1; 
     switch (ENVIRONMENT) {
         case 'development':
