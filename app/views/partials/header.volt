@@ -7,4 +7,9 @@
         {% endif %}
     </div>
 </div>
+{% if usuario is defined %}
+    <div class="aligner aligner--centerHoritzontal">
+        <a href="/usuarios/logout">Desconectar</a>
+    </div>
+{% endif %}
 <hr class="style-two">

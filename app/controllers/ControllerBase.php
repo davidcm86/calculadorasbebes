@@ -12,6 +12,7 @@ class ControllerBase extends Controller
 {
     public function initialize()
     {
+        $this->assets->addJs('js/common.js');
         $this->view->t = $this->_getTranslation();
         // Get the Http-X-Requested-With header
         /*$requestedWith = $this->request->getHeader('HTTP_X_REQUESTED_WITH');
@@ -35,6 +36,10 @@ class ControllerBase extends Controller
             $this->view->language = $this->__getLanguageFromParam($this->dispatcher->getParam('language'));
         }
         $idiomaExplode = explode('-', $this->request->getBestLanguage());
+        if ($this->session->has('Usuario')) {
+            $this->view->usuario = $this->session->get('Usuario');
+        }
+        $this->urlsNoRedirect = ['/usuarios/login', '/usuarios/registro', '/usuarios/restablecer-password/', '/'];
     }
 
     public function beforeExecuteRoute(){

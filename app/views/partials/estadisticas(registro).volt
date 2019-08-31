@@ -37,7 +37,13 @@
     </div>
     <div class="container">
     <div class="row aligner aligner--centerHoritzontal aligner--centerVertical">
-        <!-- TODO: solo mostrar si hay más de 2 resultados -->
+        <!-- TODO: solo mostrar si hay más de 4 resultados -->
+        <a href="{{ usuarioLoginRegistroResultados }}" rel="modal:open" class="button   btn-mas-resultados">Ver más resultados</a>
     </div>
     </div>
 {% endif %}
+<!-- Link to open the modal -->
+
+{% include 'partials/login.volt' %}
+{% include 'partials/registro.volt' %}
+{% include 'partials/registro-login.volt' %}

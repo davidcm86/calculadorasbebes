@@ -80,6 +80,9 @@
         'peso' => 'Weight',
         'peso-bebe-meta-title' => 'Baby weight calculator',
         'peso-bebe-meta-description' => 'Use the baby\'s weight calculator to know if your baby is at the correct weight depending on the week of pregnancy.',
-        'entrar' => 'Entrar'
+        'entrar' => 'Enter',
+        'registrarse' => 'Register',
+        'elige-pais' => 'Choose a country',
+        'calculadora-pelo-bebe' => 'Baby hair calculator'
     ];
 ?>

@@ -1,5 +1,5 @@
 <?php
- 
+
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
 use Phalcon\Http\Request;
@@ -7,17 +7,16 @@ use Phalcon\Http\Request;
 class CalculadorasController extends ControllerBase
 {
     public function indexAction() {
-        $this->assets->addJs('js/jquery.3.4.1.min.js');
+        //$this->assets->addJs('js/jquery.3.4.1.min.js');
         $this->assets->addJs('js/common.js');
-        $this->assets->addJs('js/jquery.modal.min.js');
-        
-
-        // TODO: ponemos o no una session hasta que lo hagamos mediante el plugin de user login
-        $usuarioLoginRegistroResultados = '#ex1';
+        //$this->assets->addJs('js/jquery.modal.min.js');
+        //$modelPaises = new Paises();
+        //$this->view->paises = $modelPaises->getPaises();
+        /*$usuarioLoginRegistroResultados = '#ex1';
         if ($this->session->has('Usuario')) {
             $usuarioLoginRegistroResultados = 'ver-mas';
         }
-        $this->view->usuarioLoginRegistroResultados = $usuarioLoginRegistroResultados;
+        $this->view->usuarioLoginRegistroResultados = $usuarioLoginRegistroResultados;*/
         $esMovil = false;
         if ($this->Mobile_Detect->isMobile()) $esMovil = true;
         $slug = $this->dispatcher->getParam('slug');
@@ -66,6 +65,16 @@ class CalculadorasController extends ControllerBase
                     }
                     $this->view->semanas = $this->__getSemanasGestacion();
                     $cadenaH1Traduccion = 'calculadora-peso-bebe';
+                    break;
+                case 'pelo-bebe';
+                    $calculadoraId = CAL_PELO_BEBE;
+                    if ($request->isPost()) {
+                        $this->__peloBebe($_POST, $language, $t, $calculadoraId);
+                    }
+                    $cadenaH1Traduccion = 'calculadora-pelo-bebe';
+                    $this->view->meses = $this->__getMeseslanguage($language);
+                    $this->view->anios = $this->__getEdadesSexoBebe();
+                    $this->__setMovilAndPcForm($esMovil);
                     break;
             }
             $this->ResultadosCalculadoras = new ResultadosCalculadoras();
@@ -198,6 +207,26 @@ class CalculadorasController extends ControllerBase
             $this->__salvarIpAndResultadoCalculadora($language, CAL_PESO_BEBE, $data);
             $_POST = [];
             $this->view->peso = $semanasPeso[$post['semana']];
+        } else {
+            $this->view->mensajesError = $mensajesError;
+        }
+    }
+
+    /**
+    * Lógica para calcular el color pelo del bebé
+    */
+    private function __peloBebe($post, $language, $t, $calculadoraId) {
+        $mensajesError = $this->__comprobacionFormCalculadorasGenerico($_POST, $calculadoraId);
+        if (empty($mensajesError)) {
+            $this->CalendarioBebeChino2019 = new CalendarioBebeChino2019();
+            $sexoBebe = $this->CalendarioBebeChino2019->getSexoBebe($_POST);
+            $dataEncode['edad_mama'] = $post['tu-edad'];
+            $dataEncode['mes_concepcion_bebe'] = $post['mes-concepcion-bebe'];
+            $data['data-serialize'] = json_encode($dataEncode);
+            $data['result-serialize'] = json_encode($sexoBebe);
+            $this->__salvarIpAndResultadoCalculadora($language, CAL_SEXO_BEBE, $data);
+            $this->view->sexo = $t->_($sexoBebe);
+            $_POST = [];
         } else {
             $this->view->mensajesError = $mensajesError;
         }
@@ -336,13 +365,15 @@ class CalculadorasController extends ControllerBase
                 'embarazo' => 'calculadora-del-embarazo',
                 'sexo-bebe' => 'calculadora-sexo-bebe',
                 'color-ojos-bebe' => 'calculadora-color-ojos-bebe',
-                'peso-bebe' => 'calculadora-peso-bebe'
+                'peso-bebe' => 'calculadora-peso-bebe',
+                'pelo-bebe' => 'calculadora-pelo-bebe'
             ],
             'en' => [
                 'embarazo' => 'pregnancy-calculator',
                 'sexo-bebe' => 'baby-sex-calculator',
                 'color-ojos-bebe' => 'baby-eyes-color-calculator',
-                'peso-bebe' => 'baby-weight-calculator'
+                'peso-bebe' => 'baby-weight-calculator',
+                'pelo-bebe' => 'baby-hair-calculator'
             ],
         ];
         $vistaRenderizar = array_search($slug, $slugsArray[$language]);

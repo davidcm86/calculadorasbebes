@@ -5,26 +5,21 @@
         <label class="label formulario-label aligner aligner--centerHoritzontal aligner--centerVertical">Email</label>
         <div class="formCollapsed">
             <div class="input formCollapsed-item formCollapsed-itemPrimary">
-                {{ text_field('email', 'id': 'email') }}
+                {{ text_field('email', 'id': 'email_registro') }}
             </div>
         </div>
-        <label class="label formulario-label aligner aligner--centerHoritzontal aligner--centerVertical">Repite el Email</label>
-        <div class="formCollapsed">
-            <div class="input formCollapsed-item formCollapsed-itemPrimary">
-                {{ text_field('email_repite', 'id': 'email_repite') }}
-            </div>
-        </div>
-
+        
         <label class="label formulario-label aligner aligner--centerHoritzontal aligner--centerVertical">Contraseña</label>
         <div class="formCollapsed">
             <div class="input formCollapsed-item formCollapsed-itemPrimary">
-                {{ password_field('password', 'size': 30, 'id': 'password') }}
+                {{ password_field('password', 'size': 30, 'id': 'password_registro') }}
             </div>
         </div>
-        <label class="label formulario-label aligner aligner--centerHoritzontal aligner--centerVertical">Repite contraseña</label>
+
+        <label class="label formulario-label aligner aligner--centerHoritzontal aligner--centerVertical">País</label>
         <div class="formCollapsed">
-            <div class="input formCollapsed-item formCollapsed-itemPrimary">
-                {{ password_field('password_repite', 'size': 30, 'id': 'password_repite') }}
+            <div class="select select-fullWidth">
+                {{ select("select-pais", paises, 'using': ['id', 'country_name'], 'useEmpty': true,'emptyText': t._('elige-pais')) }}
             </div>
         </div>
 

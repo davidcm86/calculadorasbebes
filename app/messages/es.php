@@ -80,6 +80,18 @@
         'peso' => 'Peso',
         'peso-bebe-meta-title' => 'Calculadora peso del bebé',
         'peso-bebe-meta-description' => 'Utiliza la calculadora de peso del bebé para saber si tu bebé está en el peso correcto dependiendo de la semana de embarazo.',
-        'entrar' => 'Entrar'
+        'entrar' => 'Entrar',
+        'registrarse' => 'Registrarse',
+        'elige-pais' => 'Elige un país',
+        'calculadora-pelo-bebe' => 'Calculadora color pelo del bebé',
+        'calculadora-pelo-bebe-texto-1' => 
+            'Descubre si el color de pelo de tu bebé será castaño, rubio o pelirrojo con esta calculadora del color de pelo del bebé. La ciencia
+            no es exacta en relación a este tema pero si hay unas probabilidades estipuladas genéticamente.
+            ',
+        'calculadora-pelo-bebe-texto-2' => 
+            'Los alelos (formas alternativas que puede tener un gen) dominantes están asociados con el cabello oscuro, mientras que los alelos 
+            recesivos están vinculados a tonos claros. Además los genes dominantes son los fuertes, lo que quiere decir que si el papá tiene el cabello 
+            oscuro y la mamá claro, el bebé tendrá un pelo oscuro, aunque también influyen los abuelos.
+            ',
     ];
 ?>

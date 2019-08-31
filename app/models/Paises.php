@@ -1,9 +1,7 @@
 <?php
 
-use Phalcon\Validation;
-use Phalcon\Validation\Validator\Email as EmailValidator;
 
-class Usuarios extends \Phalcon\Mvc\Model
+class Paises extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -16,38 +14,13 @@ class Usuarios extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $email;
+    public $country_code;
 
     /**
      *
      * @var string
      */
-    public $password;
-
-    /**
-     *
-     * @var string
-     */
-    public $token;
-
-    /**
-     *
-     * @var string
-     */
-    public $modified;
-
-    /**
-     *
-     * @var string
-     */
-    public $created;
-
-    /**
-     *  
-     * @var string
-     */
-    public $last_login;
-
+    public $country_name;
 
     /**
      * Initialize method for model.
@@ -55,7 +28,7 @@ class Usuarios extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("calculadoras");
-        $this->setSource("usuarios");
+        $this->setSource("paises");
     }
 
     /**
@@ -65,14 +38,14 @@ class Usuarios extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'usuarios';
+        return 'paises';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Usuarios[]|Usuarios|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return Paises[]|Paises|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -83,21 +56,19 @@ class Usuarios extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Usuarios|\Phalcon\Mvc\Model\ResultInterface
+     * @return Paises|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
     }
 
-    public function beforeModified()
-	{
-		$this->modified = date('Y-m-d H:i:s');
-    }
-
-    public function beforeCreate()
-	{
-		$this->created = date('Y-m-d H:i:s');
+    public function getPaises()
+    {
+        $phql = 'SELECT id, country_name FROM Paises ORDER BY country_name';
+        $manager = $this->modelsManager;
+        $result = $manager->executeQuery($phql);
+        return $result;
     }
 
 }

@@ -2,48 +2,34 @@
 
 use Phalcon\Mvc\User\Plugin;
 use Phalcon\Http\Response;
+use Phalcon\Security\Random;
 
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\PresenceOf;
 
-// TOOD: activar mediante email (cuando funcione email)
-// TODO: RECUPERAR PASSWORD
-// TODO: RECUPERAR MAIL DE CONFIRMACION
+use UsuarioRegistroForm;
 
 class AuthPlugin extends Plugin
 {
-	public function registro($data, $fuenteRegistro = 'web')
+    public function registro($data, $fuenteRegistro = 'web')
 	{
         $return = array();
         $usuario = new Usuarios();
-        $form = new RegistrosForm;
+        $form = new UsuarioRegistroForm;
+        $return['status'] = 'ok';
         if ($fuenteRegistro == 'web') {
-            // si ya existe el registro y es distinto a web. Actualizamos la pass del usuario para que pueda entrar via web y red social.
-            $parameters = ["email = '".$data['email']."'"];
-            $usuarioSave = $usuario::findFirst($parameters);
-            if ($usuarioSave && $usuarioSave->fuente_registro != 'web') {
-                if ($usuarioSave->password == '') {
-                    $usuarioSave->password = md5($data['password']);
-                    if ($usuarioSave->save()) {
-                        $this->__mandarEmailActivacionCuenta($user->email);
-                    } else {
-                        $this->logger->error('Salvar usuario ya registrado web y lo hace con red social ahora.');
-                    }
-                } else {
-                    $return['errores'][] = "Ese email ya estÃ¡ en uso.";
+            // Validate the form
+            if (!$form->isValid($data, $usuario)) {
+                foreach ($form->getMessages() as $message) {
+                    $return['errores'][] = $message->getMessage() . '</br>';
+                    $return['status'] = 'error';
                 }
             } else {
-                // Validate the form
-                if (!$form->isValid($data, $usuario)) {
-                    foreach ($form->getMessages() as $message) {
-                        $return['errores'][] = $message->getMessage();
-                    }
-                } else {
-                    $usuario->fuente_registro = $fuenteRegistro;
-                    $usuario->password = md5($data['password']);
-                    $return = $this->__salvarRegistro($usuario, $return, true);
-                }
+                $usuario->password = $this->security->hash($data["password"]);
+                $usuario->email = $data["email"];
+                $usuario->pais_id = $data['paisId'];
+                $return = $this->__salvarRegistro($usuario, $return, true);
             }
         } else {
             // si existe correo, el usuario hizo registro web, hacer login del usuario red social.
@@ -81,16 +67,19 @@ class AuthPlugin extends Plugin
      * Salvamos el registro del usuarios independientemente de la fuente que venga (web, fb, google)
      */
     private function __salvarRegistro($usuario, $return, $mandarEmailActivacion = false) {
+        $this->logger->info('a');
         $usuario->email = strtolower($usuario->email);
         if (!$usuario->create()) {
-            $return['errores'][] = 'No se ha podido crear el registro, pongase en contacto con contacto@feminiza.com';
+            $return['errores'][] = 'No se ha podido crear el registro. Pruebe más tarde.';
             $this->logger->error('Al crear registro desde Auth');
         } else {
+            $this->logger->info('b');
             $parameters = ["email =  '$usuario->email'"];
             $user = $usuario::findFirst($parameters);
             if ($user) {
-                $this->__setSessionLoginUsuario($user);
-                if ($mandarEmailActivacion) $this->__mandarEmailActivacionCuenta($user->email);
+                $this->logger->info('c');
+                //$this->__setSessionLoginUsuario($user);
+                $this->__mandarEmailActivacionCuenta($user->email);
             } else {
                 $this->logger->error('Error inesperado al hacer login');
                 $return['errores'][] = 'Email o contraseña incorrectos';
@@ -101,34 +90,31 @@ class AuthPlugin extends Plugin
     
     public function login($data, $procedencia = null)
 	{
-        $this->logger->info('a');
         if (empty($procedencia)) {
-            $this->logger->info('b');
             $return = array();
             $validation = new Validation();
             $validation->add('email',new PresenceOf(['message' => 'El email es requerido']));
             $validation->add('email', new Email(['message' => 'El email no es válido']));
             $messages = $validation->validate($_POST);
-            $this->logger->info('c');
             if (count($messages)) {
                 foreach ($messages as $message) {
                     $return['errores'][] = $message->getMessage();
                 }
             } else {
-                $this->logger->info('d');
                 $usuarios = new Usuarios();
-                $parameters = ["email = '".$data['email']."' AND password = '".md5($data['password'])."'"];
+                $parameters = ["email = '".$data['email']."'"];
                 $usuario = $usuarios::findFirst($parameters);
-                $this->logger->info('e');
-                if ($usuario) {
-                    $this->logger->info('f');
-                    $this->__setSessionLoginUsuario($usuario);
-                    $this->logger->info('g');
-                    $return['status'] = 'ok';
+                if ($this->security->checkHash($data['password'], $usuario->password)) {
+                    if ($usuario) {
+                        $this->__setSessionLoginUsuario($usuario);
+                        $return['status'] = 'ok';
+                    } else {
+                        $return['status'] = 'error';
+                        $return['errores'] = 'Email o contraseña incorrectos';
+                    }
                 } else {
-                    $this->logger->info('h');
                     $return['status'] = 'error';
-                    $return['errores'][] = 'Email o contraseña incorrectos';
+                    $return['errores'] = 'Email o contraseña incorrectos';
                 }
             }
         } elseif ($procedencia == 'google') {
@@ -141,13 +127,13 @@ class AuthPlugin extends Plugin
                 $return['errores'][] = 'Email o contraseña incorrectos';
             }
         }
-        $this->logger->info('devolvemos el temario');
+        $this->logger->info('el return');
         return $return;
     }
     
     public function logout()
 	{
-        $this->session->remove('*');
+        $this->session->remove('Usuario');
         return $this->response->redirect('/');
     }
 
@@ -247,6 +233,10 @@ class AuthPlugin extends Plugin
      */
     // TODO: crear plantilla y que funcione el email
     private function __mandarEmailActivacionCuenta($email) {
+
+    }
+
+    private function __reenviarEmailActiavacionCuenta($email) {
 
     }
 }
