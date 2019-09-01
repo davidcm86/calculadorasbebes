@@ -24,13 +24,14 @@
 
     <p>{{ t._('calculadora-pelo-bebe-texto-1') }}</p>
     <p>{{ t._('calculadora-pelo-bebe-texto-2') }}</p>
-    
-    <div class="{{ form }}">
-        <div class="{{ class }}">
-            {{ select("tu-edad", anios, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': t._('tu-edad')) }}
+
+    <label class="label formulario-label aligner aligner--centerHoritzontal aligner--centerVertical">{{ t._('color-pelo-bebe-form') }}</label>
+    <div class="formCollapsed">
+        <div class="select formCollapsed-item formCollapsed-itemPrimary">
+            {{ select("color-pelo-mama", coloresPelo, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': t._('color-pelo-mama')) }}
         </div>
-        <div class="{{ class }}">
-            {{ select("mes-concepcion-bebe", meses, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': t._('mes-concepcion-bebe')) }}
+        <div class="select formCollapsed-item formCollapsed-itemPrimary">
+            {{ select("color-pelo-papa", coloresPelo, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': t._('color-pelo-papa')) }}
         </div>
     </div>
 

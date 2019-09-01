@@ -93,5 +93,10 @@
             recesivos están vinculados a tonos claros. Además los genes dominantes son los fuertes, lo que quiere decir que si el papá tiene el cabello 
             oscuro y la mamá claro, el bebé tendrá un pelo oscuro, aunque también influyen los abuelos.
             ',
+        'color-pelo-mama' => 'Color mamá',
+        'color-pelo-papa' => 'Color papá',
+        'color-pelo-bebe-form' => 'Elige color de pelo de la mamá y papa.',
+        'error-color-pelo-mama' => 'Debes elegir color de pelo para la mamá.',
+        'error-color-pelo-papa' => 'Debes elegir color de pelo para el papá.'
     ];
 ?>
