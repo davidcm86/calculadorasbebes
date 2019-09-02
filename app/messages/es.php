@@ -97,6 +97,12 @@
         'color-pelo-papa' => 'Color papá',
         'color-pelo-bebe-form' => 'Elige color de pelo de la mamá y papa.',
         'error-color-pelo-mama' => 'Debes elegir color de pelo para la mamá.',
-        'error-color-pelo-papa' => 'Debes elegir color de pelo para el papá.'
+        'error-color-pelo-papa' => 'Debes elegir color de pelo para el papá.',
+        'color-pelo-bebe-resultado-texto' => 'Probabilidades del color de pelo del bebé',
+        'negro' => 'Negro',
+        'castanio' => 'Castaño',
+        'castanioclaro' => 'Castaño claro',
+        'pelirrojo' => 'Pelirrojo',
+        'rubio' => 'Rubio',
     ];
 ?>

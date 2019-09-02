@@ -4,10 +4,13 @@
 <h1 class="aligner aligner--centerHoritzontal aligner--centerVertical">{{ t._('calculadora-pelo-bebe') }}</h1>
 {{ form('' ~ formAction ~ '', 'method': 'post') }}
 
-    {% if sexo is defined %}
+    {% if porcentajes is defined %}
         <div class="text-center notification notification--success aligner aligner--centerHoritzontal aligner--centerVertical">
             <p>
-                {{ t._('sexo-bebe-resultado-1') }} {{ sexo }}
+                {{ t._('color-pelo-bebe-resultado-texto') }} </br>
+                {% for index, porcentaje in porcentajes %}
+                    {{ t._(index) }}: {{ porcentaje }}%
+                {% endfor %}
             </p>
         </div>
     {% endif %}

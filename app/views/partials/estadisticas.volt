@@ -30,6 +30,16 @@
                             {{ t._('semana-select') }}: <b>{{ estadistica.semana }}</b></br>
                             {{ t._('peso') }}: <b>{{ estadistica.peso }} {{ t._('gramos') }}</b></br>
                         {% break %}
+                        {% case constant("CAL_PELO_BEBE") %}
+                            {{ t._('creado-el') }}: <b>{{ estadistica.created  }}</b></br>
+                            {{ t._('color-pelo-mama') }}: <b>{{ estadistica.color_pelo_mama }}</b></br>
+                            {{ t._('color-pelo-papa') }}: <b>{{ estadistica.color_pelo_papa }}</b></br>
+                                {{ t._('negro') }}: <b>{{ estadistica.negro }}%</b>, 
+                                {{ t._('castanio') }}: <b> {{ estadistica.castanio }}%</b>, 
+                                {{ t._('pelirrojo') }}: <b> {{ estadistica.pelirrojo }}%</b>, 
+                                {{ t._('castanioclaro') }}: <b>{{ estadistica.castanioclaro }}%</b>, 
+                                {{ t._('rubio') }}: <b>{{ estadistica.rubio }}%</b></br>
+                        {% break %}
                     {% endswitch %}
                 </div>
             {% endfor %}

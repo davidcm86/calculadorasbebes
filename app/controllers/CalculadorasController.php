@@ -27,6 +27,7 @@ class CalculadorasController extends ControllerBase
         $this->view->formAction = '/' . $language . '/' . $slug; // construimos la url del form
         $this->view->rutaHome = '/' . $language;
         if ($vistaRenderizar) {
+            // TODO: hay determinadas situaciones con el idioma al traducir que no están hechas, mirarlas.
             $request = new Request();
             switch ($vistaRenderizar) {
                 case 'embarazo';
@@ -67,6 +68,7 @@ class CalculadorasController extends ControllerBase
                     $cadenaH1Traduccion = 'calculadora-peso-bebe';
                     break;
                 case 'pelo-bebe';
+                    // TODO: hacer todo el proceso en ingles
                     $calculadoraId = CAL_PELO_BEBE;
                     if ($request->isPost()) {
                         $this->__peloBebe($_POST, $language, $t, $calculadoraId);
@@ -215,16 +217,15 @@ class CalculadorasController extends ControllerBase
     * Lógica para calcular el color pelo del bebé
     */
     private function __peloBebe($post, $language, $t, $calculadoraId) {
-        $mensajesError = $this->__comprobacionFormCalculadorasGenerico($_POST, $calculadoraId);
+        $mensajesError = $this->__comprobacionFormCalculadorasGenerico($post, $calculadoraId);
         if (empty($mensajesError)) {
-            $porcentajes = $this->__comprobarColorPelo($_POST);
-            $sexoBebe = $this->CalendarioBebeChino2019->getSexoBebe($_POST);
-            //$dataEncode['edad_mama'] = $post['tu-edad'];
-            //$dataEncode['mes_concepcion_bebe'] = $post['mes-concepcion-bebe'];
-            //$data['data-serialize'] = json_encode($dataEncode);
-            //$data['result-serialize'] = json_encode($sexoBebe);
-            //$this->__salvarIpAndResultadoCalculadora($language, CAL_SEXO_BEBE, $data);
-            $this->view->sexo = $t->_($sexoBebe);
+            $porcentajes = $this->__comprobarColorPelo($post, $t);
+            $dataEncode['color_pelo_mama'] = $post['color-pelo-mama'];
+            $dataEncode['color_pelo_papa'] = $post['color-pelo-papa'];
+            $data['data-serialize'] = json_encode($dataEncode);
+            $data['result-serialize'] = json_encode($porcentajes);
+            $this->__salvarIpAndResultadoCalculadora($language, CAL_PELO_BEBE, $data);
+            $this->view->porcentajes = (object)$porcentajes;
             $_POST = [];
         } else {
             $this->view->mensajesError = $mensajesError;
@@ -234,162 +235,167 @@ class CalculadorasController extends ControllerBase
     /**
      * Sacamos el porcentaje correspondiente a los colores de pelo que nos pasan
      */
-    private function __comprobarColorPelo($post)
+    private function __comprobarColorPelo($post, $t)
     {
-        $porcentajes['negro'] = 0;
-        $porcentajes['castanio'] = 0;
-        $porcentajes['pelirrojo'] = 0;
-        $porcentajes['castanio-claro'] = 0;
-        $porcentajes['rubio'] = 0;
+        $indexNegro = 'negro';
+        $indexCastanio = 'castanio';
+        $indexCastanioClaro = 'castanioclaro';
+        $indexRubio = 'rubio';
+        $indexPelirrojo = 'pelirrojo';
+        $porcentajes[$indexNegro] = 0;
+        $porcentajes[$indexCastanio] = 0;
+        $porcentajes[$indexCastanioClaro] = 0;
+        $porcentajes[$indexRubio] = 0;
+        $porcentajes[$indexPelirrojo] = 0;
         // negro
         if ($post['color-pelo-mama'] == 'negro' && $post['color-pelo-papa'] == 'negro') {
-            $porcentajes['negro'] = 100;
+            $porcentajes[$indexNegro] = 100;
             return $porcentajes;
         }
         if (($post['color-pelo-mama'] == 'negro' && $post['color-pelo-papa'] == 'castanio') 
             || ($post['color-pelo-papa'] == 'negro' && $post['color-pelo-mama'] == 'castanio')) {
-            $porcentajes['negro'] = 50;
-            $porcentajes['castanio'] = 50;
+            $porcentajes[$indexNegro] = 50;
+            $porcentajes[$indexCastanio] = 50;
             return $porcentajes;
         }
         if (($post['color-pelo-mama'] == 'negro' && $post['color-pelo-papa'] == 'pelirrojo') 
             || ($post['color-pelo-papa'] == 'negro' && $post['color-pelo-mama'] == 'pelirrojo')) {
-            $porcentajes['castanio'] = 100;
+            $porcentajes[$indexCastanio] = 100;
             return $porcentajes;
         }
-        if (($post['color-pelo-mama'] == 'negro' && $post['color-pelo-papa'] == 'castanio-claro') 
-            || ($post['color-pelo-papa'] == 'negro' && $post['color-pelo-mama'] == 'castanio-claro')) {
-            $porcentajes['castanio'] = 100;
+        if (($post['color-pelo-mama'] == 'negro' && $post['color-pelo-papa'] == 'castanioclaro') 
+            || ($post['color-pelo-papa'] == 'negro' && $post['color-pelo-mama'] == 'castanioclaro')) {
+            $porcentajes[$indexCastanio] = 100;
             return $porcentajes;
         }
         if (($post['color-pelo-mama'] == 'negro' && $post['color-pelo-papa'] == 'rubio') 
             || ($post['color-pelo-papa'] == 'negro' && $post['color-pelo-mama'] == 'rubio')) {
-            $porcentajes['castanio'] = 100;
+            $porcentajes[$indexCastanio] = 100;
             return $porcentajes;
         }
         // castaño
         if ($post['color-pelo-mama'] == 'castanio' && $post['color-pelo-papa'] == 'castanio') {
-            $porcentajes['negro'] = 25;
-            $porcentajes['castanio'] = 50;
-            $porcentajes['pelirrojo'] = 3;
-            $porcentajes['castanio-claro'] = 11;
-            $porcentajes['rubio'] = 12;
+            $porcentajes[$indexNegro] = 25;
+            $porcentajes[$indexCastanio] = 50;
+            $porcentajes[$indexPelirrojo] = 3;
+            $porcentajes[$indexCastanioClaro] = 11;
+            $porcentajes[$indexRubio] = 12;
             return $porcentajes;
         }
         if (($post['color-pelo-mama'] == 'castanio' && $post['color-pelo-papa'] == 'negro') 
             || ($post['color-pelo-papa'] == 'castanio' && $post['color-pelo-mama'] == 'negro')) {
-            $porcentajes['negro'] = 50;
-            $porcentajes['castanio'] = 50;
+            $porcentajes[$indexNegro] = 50;
+            $porcentajes[$indexCastanio] = 50;
             return $porcentajes;
         }
         if (($post['color-pelo-mama'] == 'castanio' && $post['color-pelo-papa'] == 'pelirrojo') 
             || ($post['color-pelo-papa'] == 'castanio' && $post['color-pelo-mama'] == 'pelirrojo')) {
-            $porcentajes['pelirrojo'] = 16;
-            $porcentajes['castanio'] = 50;
-            $porcentajes['castanio-claro'] = 34;
+            $porcentajes[$indexPelirrojo] = 16;
+            $porcentajes[$indexCastanio] = 50;
+            $porcentajes[$indexCastanioClaro] = 34;
             return $porcentajes;
         }
-        if (($post['color-pelo-mama'] == 'castanio' && $post['color-pelo-papa'] == 'castanio-claro') 
-            || ($post['color-pelo-papa'] == 'castanio' && $post['color-pelo-mama'] == 'castanio-claro')) {
-            $porcentajes['pelirrojo'] = 8;
-            $porcentajes['castanio'] = 50;
-            $porcentajes['castanio-claro'] = 25;
-            $porcentajes['rubio'] = 16;
+        if (($post['color-pelo-mama'] == 'castanio' && $post['color-pelo-papa'] == 'castanioclaro') 
+            || ($post['color-pelo-papa'] == 'castanio' && $post['color-pelo-mama'] == 'castanioclaro')) {
+            $porcentajes[$indexPelirrojo] = 8;
+            $porcentajes[$indexCastanio] = 50;
+            $porcentajes[$indexCastanioClaro] = 25;
+            $porcentajes[$indexRubio] = 16;
             return $porcentajes;
         }
         if (($post['color-pelo-mama'] == 'castanio' && $post['color-pelo-papa'] == 'rubio') 
             || ($post['color-pelo-papa'] == 'castanio' && $post['color-pelo-mama'] == 'rubio')) {
-            $porcentajes['castanio'] = 50;
-            $porcentajes['castanio-claro'] = 16;
-            $porcentajes['rubio'] = 34;
+            $porcentajes[$indexCastanio] = 50;
+            $porcentajes[$indexCastanioClaro] = 16;
+            $porcentajes[$indexRubio] = 34;
             return $porcentajes;
         }
         // pelirrojo
         if ($post['color-pelo-mama'] == 'pelirrojo' && $post['color-pelo-papa'] == 'pelirrojo') {
-            $porcentajes['pelirrojo'] = 100;
+            $porcentajes[$indexPelirrojo] = 100;
             return $porcentajes;
         }
-        if (($post['color-pelo-mama'] == 'pelirrojo' && $post['color-pelo-papa'] == 'castanio-claro') 
-            || ($post['color-pelo-papa'] == 'pelirrojo' && $post['color-pelo-mama'] == 'castanio-claro')) {
-            $porcentajes['pelirrojo'] = 50;
-            $porcentajes['castanio-claro'] = 50;
+        if (($post['color-pelo-mama'] == 'pelirrojo' && $post['color-pelo-papa'] == 'castanioclaro') 
+            || ($post['color-pelo-papa'] == 'pelirrojo' && $post['color-pelo-mama'] == 'castanioclaro')) {
+            $porcentajes[$indexPelirrojo] = 50;
+            $porcentajes[$indexCastanioClaro] = 50;
             return $porcentajes;
         }
         if (($post['color-pelo-mama'] == 'pelirrojo' && $post['color-pelo-papa'] == 'rubio') 
             || ($post['color-pelo-papa'] == 'pelirrojo' && $post['color-pelo-mama'] == 'rubio')) {
-            $porcentajes['castanio-claro'] = 100;
+            $porcentajes[$indexCastanioClaro] = 100;
             return $porcentajes;
         }
         if (($post['color-pelo-mama'] == 'pelirrojo' && $post['color-pelo-papa'] == 'negro') 
             || ($post['color-pelo-papa'] == 'pelirrojo' && $post['color-pelo-mama'] == 'negro')) {
-            $porcentajes['castanio'] = 100;
+            $porcentajes[$indexCastanio] = 100;
             return $porcentajes;
         }
         if (($post['color-pelo-mama'] == 'pelirrojo' && $post['color-pelo-papa'] == 'castanio') 
             || ($post['color-pelo-papa'] == 'pelirrojo' && $post['color-pelo-mama'] == 'castanio')) {
-            $porcentajes['castanio'] = 50;
-            $porcentajes['pelirrojo'] = 16;
-            $porcentajes['castanio-claro'] = 34;
+            $porcentajes[$indexCastanio] = 50;
+            $porcentajes[$indexPelirrojo] = 16;
+            $porcentajes[$indexCastanioClaro] = 34;
             return $porcentajes;
         }
         // castaño claro
-        if ($post['color-pelo-mama'] == 'castanio-claro' && $post['color-pelo-papa'] == 'castanio-claro') {
-            $porcentajes['pelirrojo'] = 25;
-            $porcentajes['castanio-claro'] = 50;
-            $porcentajes['rubio'] = 25;
+        if ($post['color-pelo-mama'] == 'castanioclaro' && $post['color-pelo-papa'] == 'castanioclaro') {
+            $porcentajes[$indexPelirrojo] = 25;
+            $porcentajes[$indexCastanioClaro] = 50;
+            $porcentajes[$indexRubio] = 25;
             return $porcentajes;
         }
-        if (($post['color-pelo-mama'] == 'castanio-claro' && $post['color-pelo-papa'] == 'rubio')
-            || ($post['color-pelo-papa'] == 'castanio-claro' && $post['color-pelo-mama'] == 'rubio')) {
-            $porcentajes['castanio-claro'] = 50;
-            $porcentajes['rubio'] = 50;
+        if (($post['color-pelo-mama'] == 'castanioclaro' && $post['color-pelo-papa'] == 'rubio')
+            || ($post['color-pelo-papa'] == 'castanioclaro' && $post['color-pelo-mama'] == 'rubio')) {
+            $porcentajes[$indexCastanioClaro] = 50;
+            $porcentajes[$indexRubio] = 50;
             return $porcentajes;
         }
-        if (($post['color-pelo-mama'] == 'castanio-claro' && $post['color-pelo-papa'] == 'negro')
-            || ($post['color-pelo-papa'] == 'castanio-claro' && $post['color-pelo-mama'] == 'negro')) {
-            $porcentajes['castanio'] = 100;
+        if (($post['color-pelo-mama'] == 'castanioclaro' && $post['color-pelo-papa'] == 'negro')
+            || ($post['color-pelo-papa'] == 'castanioclaro' && $post['color-pelo-mama'] == 'negro')) {
+            $porcentajes[$indexCastanio] = 100;
             return $porcentajes;
         }
-        if (($post['color-pelo-mama'] == 'castanio-claro' && $post['color-pelo-papa'] == 'castanio')
-            || ($post['color-pelo-papa'] == 'castanio-claro' && $post['color-pelo-mama'] == 'castanio')) {
-            $porcentajes['castanio'] = 50;
-            $porcentajes['pelirrojo'] = 8;
-            $porcentajes['castanio-claro'] = 25;
-            $porcentajes['rubio'] = 17;
+        if (($post['color-pelo-mama'] == 'castanioclaro' && $post['color-pelo-papa'] == 'castanio')
+            || ($post['color-pelo-papa'] == 'castanioclaro' && $post['color-pelo-mama'] == 'castanio')) {
+            $porcentajes[$indexCastanio] = 50;
+            $porcentajes[$indexPelirrojo] = 8;
+            $porcentajes[$indexCastanioClaro] = 25;
+            $porcentajes[$indexRubio] = 17;
             return $porcentajes;
         }
-        if (($post['color-pelo-mama'] == 'castanio-claro' && $post['color-pelo-papa'] == 'pelirrojo')
-            || ($post['color-pelo-papa'] == 'castanio-claro' && $post['color-pelo-mama'] == 'pelirrojo')) {
-            $porcentajes['pelirrojo'] = 50;
-            $porcentajes['castanio-claro'] = 50;
+        if (($post['color-pelo-mama'] == 'castanioclaro' && $post['color-pelo-papa'] == 'pelirrojo')
+            || ($post['color-pelo-papa'] == 'castanioclaro' && $post['color-pelo-mama'] == 'pelirrojo')) {
+            $porcentajes[$indexPelirrojo] = 50;
+            $porcentajes[$indexCastanioClaro] = 50;
             return $porcentajes;
         }
         // rubio
         if ($post['color-pelo-mama'] == 'rubio' && $post['color-pelo-papa'] == 'rubio') {
-            $porcentajes['rubio'] = 100;
+            $porcentajes[$indexRubio] = 100;
             return $porcentajes;
         }
         if (($post['color-pelo-mama'] == 'rubio' && $post['color-pelo-papa'] == 'negro')
             || ($post['color-pelo-papa'] == 'rubio' && $post['color-pelo-mama'] == 'negro')) {
-            $porcentajes['castanio'] = 100;
+            $porcentajes[$indexCastanio] = 100;
             return $porcentajes;
         }
         if (($post['color-pelo-mama'] == 'rubio' && $post['color-pelo-papa'] == 'castanio')
             || ($post['color-pelo-papa'] == 'rubio' && $post['color-pelo-mama'] == 'castanio')) {
-            $porcentajes['castanio'] = 50;
-            $porcentajes['castanio-claro'] = 16;
-            $porcentajes['rubio'] = 34;
+            $porcentajes[$indexCastanio] = 50;
+            $porcentajes[$indexCastanioClaro] = 16;
+            $porcentajes[$indexRubio] = 34;
             return $porcentajes;
         }
         if (($post['color-pelo-mama'] == 'rubio' && $post['color-pelo-papa'] == 'pelirrojo')
             || ($post['color-pelo-papa'] == 'rubio' && $post['color-pelo-mama'] == 'pelirrojo')) {
-            $porcentajes['castanio-claro'] = 100;
+            $porcentajes[$indexCastanioClaro] = 100;
             return $porcentajes;
         }
         if (($post['color-pelo-mama'] == 'rubio' && $post['color-pelo-papa'] == 'pelirrojo')
             || ($post['color-pelo-papa'] == 'rubio' && $post['color-pelo-mama'] == 'pelirrojo')) {
-            $porcentajes['castanio-claro'] = 50;
-            $porcentajes['rubio'] = 50;
+            $porcentajes[$indexCastanioClaro] = 50;
+            $porcentajes[$indexRubio] = 50;
             return $porcentajes;
         }
     }
@@ -509,12 +515,12 @@ class CalculadorasController extends ControllerBase
         switch($language) {
             case 'es':
                 $colores = [
-                    'negro' => 'Negro', 'castaño' => 'Castaño', 'pelirrojo' => 'Pelirrojo', 'castaño-claro' => 'Castaño claro', 'rubio' => 'Rubio'
+                    'negro' => 'Negro', 'castanio' => 'Castaño', 'pelirrojo' => 'Pelirrojo', 'castanioclaro' => 'Castaño claro', 'rubio' => 'Rubio'
                 ];
                 break;
             case 'en':
                 $colores = [
-                    'negro' => 'Negro', 'castaño' => 'Castaño', 'pelirrojo' => 'Pelirrojo', 'castaño-claro' => 'Castaño claro', 'rubio' => 'Rubio'
+                    'negro' => 'Negro', 'castanio' => 'Castaño', 'pelirrojo' => 'Pelirrojo', 'castanioclaro' => 'Castaño claro', 'rubio' => 'Rubio'
                 ];
                 break;
         }
@@ -627,6 +633,21 @@ class CalculadorasController extends ControllerBase
                     $data[$key]['peso'] = $resultData->peso;
                     $dataIntroducido = json_decode($field['data']);
                     $data[$key]['semana'] = $dataIntroducido->semana;
+                }
+                break;
+            case CAL_PELO_BEBE;
+                foreach ($data as $key => $field) {
+                    $data[$key]['created'] = date('Y-m-d', strtotime($field['created']));
+                    if ($language != 'en') $data[$key]['created'] = date('d-m-Y', strtotime($field['created']));
+                    $resultData = json_decode($field['result']);
+                    $data[$key]['negro'] = $resultData->negro;
+                    $data[$key]['castanio'] = $resultData->castanio;
+                    $data[$key]['pelirrojo'] = $resultData->pelirrojo;
+                    $data[$key]['castanioclaro'] = $resultData->castanioclaro;
+                    $data[$key]['rubio'] = $resultData->rubio;
+                    $dataIntroducido = json_decode($field['data']);
+                    $data[$key]['color_pelo_mama'] = $t->_($dataIntroducido->color_pelo_mama);
+                    $data[$key]['color_pelo_papa'] = $t->_($dataIntroducido->color_pelo_papa);
                 }
                 break;
         }
