@@ -13,13 +13,13 @@
         <div class="container">
             <div class="row">
                     <div class="col background-azul notification aligner aligner--centerHoritzontal aligner--centerVertical">
-                        <p>{{ azul }} %</p>
+                        <p>{{ t._('azul') }} {{ azul }} %</p>
                     </div>
                     <div class="col background-marron notification aligner aligner--centerHoritzontal aligner--centerVertical">
-                        <p>{{ marron }} %</p>
+                        <p>{{ t._('marron') }} {{ marron }} %</p>
                     </div>
                     <div class="col background-verde notification aligner aligner--centerHoritzontal aligner--centerVertical">
-                        <p>{{ verde }} %</p>
+                        <p>{{ t._('verde') }} {{ verde }} %</p>
                     </div>
             </div>
         </div>

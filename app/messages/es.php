@@ -85,7 +85,7 @@
         'elige-pais' => 'Elige un país',
         'calculadora-pelo-bebe' => 'Calculadora color pelo del bebé',
         'calculadora-pelo-bebe-texto-1' => 
-            'Descubre si el color de pelo de tu bebé será castaño, rubio o pelirrojo con esta calculadora del color de pelo del bebé. La ciencia
+            'Descubre si el color de pelo de tu bebé será negro, castaño, pelirrojo, castaño claro o pelirrojo con esta calculadora del color de pelo del bebé. La ciencia
             no es exacta en relación a este tema pero si hay unas probabilidades estipuladas genéticamente.
             ',
         'calculadora-pelo-bebe-texto-2' => 
@@ -104,5 +104,7 @@
         'castanioclaro' => 'Castaño claro',
         'pelirrojo' => 'Pelirrojo',
         'rubio' => 'Rubio',
+        'pelo-bebe-meta-title' => 'Calculadora del color de pelo del bebé',
+        'pelo-bebe-meta-description' => 'Calculadora para el color de pelo del bebé. ¿Cuál será el color de pelo de tu bebé (castaño, negro, rubio)?'
     ];
 ?>

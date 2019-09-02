@@ -106,13 +106,12 @@ class ResultadosCalculadoras extends \Phalcon\Mvc\Model
         $phql = "SELECT * FROM ResultadosCalculadoras WHERE calculadora_id = $calculadoraId ORDER BY created DESC LIMIT 10";
         $manager = $this->modelsManager;
         $query = $manager->createQuery($phql);
-        // TODO: descomentar en produccion
-        /*$query->cache(
+        $query->cache(
             [
                 'key'      => 'estadisticas-calculadora-' . $calculadoraId,
                 'lifetime' => 3600,
             ]
-        );*/
+        );
         $result = $query->execute()->toArray();
         return $result;
     }

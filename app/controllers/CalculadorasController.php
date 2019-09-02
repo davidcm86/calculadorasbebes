@@ -27,7 +27,6 @@ class CalculadorasController extends ControllerBase
         $this->view->formAction = '/' . $language . '/' . $slug; // construimos la url del form
         $this->view->rutaHome = '/' . $language;
         if ($vistaRenderizar) {
-            // TODO: hay determinadas situaciones con el idioma al traducir que no están hechas, mirarlas.
             $request = new Request();
             switch ($vistaRenderizar) {
                 case 'embarazo';
@@ -57,7 +56,7 @@ class CalculadorasController extends ControllerBase
                     }
                     $this->__setMovilAndPcForm($esMovil);
                     $cadenaH1Traduccion = 'calculadora-ojos-bebe';
-                    $this->view->colorOjos = $this->__colorOjos();
+                    $this->view->colorOjos = $this->__getColorOjosLanguaje($language);
                     break;
                 case 'peso-bebe';
                     $calculadoraId = CAL_PESO_BEBE;
@@ -68,13 +67,12 @@ class CalculadorasController extends ControllerBase
                     $cadenaH1Traduccion = 'calculadora-peso-bebe';
                     break;
                 case 'pelo-bebe';
-                    // TODO: hacer todo el proceso en ingles
                     $calculadoraId = CAL_PELO_BEBE;
                     if ($request->isPost()) {
                         $this->__peloBebe($_POST, $language, $t, $calculadoraId);
                     }
                     $cadenaH1Traduccion = 'calculadora-pelo-bebe';
-                    $this->view->coloresPelo = $this->__getColoresPelolanguage($language);
+                    $this->view->coloresPelo = $this->__getColoresPeloLanguage($language);
                     $this->__setMovilAndPcForm($esMovil);
                     break;
             }
@@ -475,8 +473,15 @@ class CalculadorasController extends ControllerBase
         return $anios;
     }
 
-    private function __colorOjos() {
-        $colorOjos = ['azul' => 'Azúl', 'marron' => 'Marrón', 'verde' => 'Verde'];
+    private function __getColorOjosLanguaje($language) {
+        switch($language) {
+            case 'es':
+                $colorOjos = ['azul' => 'Azúl', 'marron' => 'Marrón', 'verde' => 'Verde'];
+                break;
+            case 'en':
+                $colorOjos = ['azul' => 'Blue', 'marron' => 'Brown', 'verde' => 'Green'];
+                break;
+        }
         return $colorOjos;
     }
 
@@ -510,7 +515,7 @@ class CalculadorasController extends ControllerBase
         return $meses;
     }
 
-    private function __getColoresPelolanguage($language)
+    private function __getColoresPeloLanguage($language)
     {
         switch($language) {
             case 'es':
@@ -520,7 +525,7 @@ class CalculadorasController extends ControllerBase
                 break;
             case 'en':
                 $colores = [
-                    'negro' => 'Negro', 'castanio' => 'Castaño', 'pelirrojo' => 'Pelirrojo', 'castanioclaro' => 'Castaño claro', 'rubio' => 'Rubio'
+                    'negro' => 'Black', 'castanio' => 'Brown', 'pelirrojo' => 'Ginger hair', 'castanioclaro' => 'Light brown', 'rubio' => 'Blond'
                 ];
                 break;
         }

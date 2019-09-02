@@ -83,6 +83,29 @@
         'entrar' => 'Enter',
         'registrarse' => 'Register',
         'elige-pais' => 'Choose a country',
-        'calculadora-pelo-bebe' => 'Baby hair calculator'
+        'calculadora-pelo-bebe' => 'Baby hair calculator',
+        'calculadora-pelo-bebe-texto-1' => 
+            'Find out if your baby\'s hair color will be black, brown, redhead, light brown or redhead with this 
+            calculator of the baby\'s hair color. The science
+             it is not exact in relation to this issue but if there are genetically stipulated probabilities.
+            ',
+        'calculadora-pelo-bebe-texto-2' => 
+            'The alleles (alternative forms that a gene can have) dominant are associated with dark hair, while the 
+            alleles recessive are linked to light tones. In addition, the dominant genes are the strong ones, which means 
+            that if the father has hair dark and light mom, the baby will have dark hair, although grandparents also influence.
+            ',
+        'color-pelo-mama' => 'Color mom',
+        'color-pelo-papa' => 'Color dad',
+        'color-pelo-bebe-form' => 'Choose mom and dad\'s hair color.',
+        'error-color-pelo-mama' => 'You must choose hair color for mom.',
+        'error-color-pelo-papa' => 'You must choose hair color for dad.',
+        'color-pelo-bebe-resultado-texto' => 'Baby hair color probabilities',
+        'negro' => 'Black',
+        'castanio' => 'Brown',
+        'castanioclaro' => 'Light brown',
+        'pelirrojo' => 'Ginger hair',
+        'rubio' => 'Blond',
+        'pelo-bebe-meta-title' => 'Baby hair color calculator',
+        'pelo-bebe-meta-description' => 'Calculator for baby\'s hair color. What will be the color of your baby\'s hair (brown, black, blond)?'
     ];
 ?>
