@@ -490,8 +490,12 @@ class CalculadorasController extends ControllerBase
                 break;
             case 'en':
                 $colorOjos = ['azul' => 'Blue', 'marron' => 'Brown', 'verde' => 'Green'];
+                break;
             case 'de':
                 $colorOjos = ['azul' => 'Blau', 'marron' => 'Braun', 'verde' => 'Grün'];
+                break;
+            case 'fr':
+                $colorOjos = ['azul' => 'Bleu', 'marron' => 'Marron', 'verde' => 'Vert'];
                 break;
         }
         return $colorOjos;
@@ -529,6 +533,13 @@ class CalculadorasController extends ControllerBase
                     '06' => 'Juni', '07' => 'Juli', '08' => 'August', '09' => 'September', '10' => 'Oktober',
                     '11' => 'November', '12' => 'Dezember'
                 ];
+            break;
+                case 'fr':
+                $meses = [
+                    '01' => 'Janvier', '02' => 'Février', '03' => 'Mars', '04' => 'Avril', '05' => 'Peut',
+                    '06' => 'Juin', '07' => 'Juillet', '08' => 'Août', '09' => 'Septembre', '10' => 'Octobre',
+                    '11' => 'Novembre', '12' => 'Décembre'
+                ];
                 break;
         }
         return $meses;
@@ -550,6 +561,11 @@ class CalculadorasController extends ControllerBase
             case 'de':
                 $colores = [
                     'negro' => 'Schwarz', 'castanio' => 'Kastanie', 'pelirrojo' => 'Rotschopf', 'castanioclaro' => 'Hellbraun', 'rubio' => 'Blond'
+                ];
+                break;
+            case 'fr':
+                $colores = [
+                    'negro' => 'Noir', 'castanio' => 'Châtaigne', 'pelirrojo' => 'Rousse', 'castanioclaro' => 'châtain clair', 'rubio' => 'Blonde'
                 ];
                 break;
         }
@@ -599,6 +615,13 @@ class CalculadorasController extends ControllerBase
                 'color-ojos-bebe' => 'farbe-babyaugen',
                 'peso-bebe' => 'baby-gewichtsrechner',
                 'pelo-bebe' => 'farbe-babyhaar'
+            ],
+            'fr' => [
+                'embarazo' => 'calculatrice-de-grossesse',
+                'sexo-bebe' => 'calculateur-de-sexe-pour-bebe',
+                'color-ojos-bebe' => 'yeux-de-couleur-bebe',
+                'peso-bebe' => 'calculateur-de-poids-bebe',
+                'pelo-bebe' => 'cheveux-de-couleur-bebe'
             ],
         ];
         $vistaRenderizar = array_search($slug, $slugsArray[$language]);
