@@ -28,7 +28,7 @@ class ControllerBase extends Controller
         $this->view->setTemplateAfter('common');
         $this->view->dominioPhp = DOMINIO; // así podemos pintar la variable en volt, con los tag de php no lo coge
         $this->view->lang = $this->dispatcher->getParam('language');
-        $this->view->languages = ['en' => 'English', 'es' => 'Español'];
+        $this->view->languages = ['en' => 'English', 'es' => 'Español', 'de' => 'German'];
         $this->tag->setDefault('select-language', $this->view->lang);
         if (empty($this->dispatcher->getParam('language'))) {
             $this->view->language = $this->request->getBestLanguage();
@@ -98,6 +98,9 @@ class ControllerBase extends Controller
                 case 'en':
                     $idiomaSiglas = 'en';
                     break;
+                case 'de':
+                    $idiomaSiglas = 'de';
+                    break;
                 default;
                     $idiomaSiglas = 'es';
             }
@@ -120,7 +123,7 @@ class ControllerBase extends Controller
     }
 
     private function __existLanguage($language) {
-        if (in_array($language, ['es', 'en'])) return true;
+        if (in_array($language, ['es', 'en', 'de'])) return true;
         return false;
     }
 
@@ -131,6 +134,9 @@ class ControllerBase extends Controller
                 break;
             case 'en':
                 $languageReturn = 'en-EN';
+                break;
+            case 'de':
+                $languageReturn = 'de-DE';
                 break;
             default:
                 $languageReturn = 'es-ES';

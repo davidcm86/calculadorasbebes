@@ -490,6 +490,8 @@ class CalculadorasController extends ControllerBase
                 break;
             case 'en':
                 $colorOjos = ['azul' => 'Blue', 'marron' => 'Brown', 'verde' => 'Green'];
+            case 'de':
+                $colorOjos = ['azul' => 'Blau', 'marron' => 'Braun', 'verde' => 'Grün'];
                 break;
         }
         return $colorOjos;
@@ -521,6 +523,13 @@ class CalculadorasController extends ControllerBase
                     '11' => 'November', '12' => 'December'
                 ];
                 break;
+            case 'de':
+                $meses = [
+                    '01' => 'Januar', '02' => 'Februar', '03' => 'März', '04' => 'April', '05' => 'Mai',
+                    '06' => 'Juni', '07' => 'Juli', '08' => 'August', '09' => 'September', '10' => 'Oktober',
+                    '11' => 'November', '12' => 'Dezember'
+                ];
+                break;
         }
         return $meses;
     }
@@ -536,6 +545,11 @@ class CalculadorasController extends ControllerBase
             case 'en':
                 $colores = [
                     'negro' => 'Black', 'castanio' => 'Brown', 'pelirrojo' => 'Ginger hair', 'castanioclaro' => 'Light brown', 'rubio' => 'Blond'
+                ];
+                break;
+            case 'de':
+                $colores = [
+                    'negro' => 'Schwarz', 'castanio' => 'Kastanie', 'pelirrojo' => 'Rotschopf', 'castanioclaro' => 'Hellbraun', 'rubio' => 'Blond'
                 ];
                 break;
         }
@@ -578,6 +592,13 @@ class CalculadorasController extends ControllerBase
                 'color-ojos-bebe' => 'baby-eyes-color-calculator',
                 'peso-bebe' => 'baby-weight-calculator',
                 'pelo-bebe' => 'baby-hair-color-calculator'
+            ],
+            'de' => [
+                'embarazo' => 'schwangerschaftsrechner',
+                'sexo-bebe' => 'baby-sex-rechner',
+                'color-ojos-bebe' => 'farbe-babyaugen',
+                'peso-bebe' => 'baby-gewichtsrechner',
+                'pelo-bebe' => 'farbe-babyhaar'
             ],
         ];
         $vistaRenderizar = array_search($slug, $slugsArray[$language]);
