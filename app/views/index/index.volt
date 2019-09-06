@@ -1,3 +1,6 @@
+<div class="col-sm-12 aligner aligner--centerHoritzontal aligner--centerVertical">
+    <h1>{{ t._('h1-inicio') }}</h1>
+</div>
 <div class="row">
     {%for calculadora in calculadoras%}
         <div class="col-sm-4 aligner aligner--centerHoritzontal aligner--centerVertical fondo-calculadoras-index">
