@@ -83,6 +83,16 @@ class CalculadorasController extends ControllerBase
             $this->Breadcrumbs->add($t->_($cadenaH1Traduccion), null, ['linked' => false]);
             $this->view->descriptionMeta = $vistaRenderizar . '-meta-description';
             $this->view->titlePagina = $vistaRenderizar . '-meta-title';
+            $calculadora = Calculadoras::findFirstByid($calculadoraId);
+            // metas jsonld
+            $doc = (object)array(
+                "@context" => "https://schema.org/",
+                "@type" => "Product",
+                "name" => $t->_($vistaRenderizar . '-meta-title'),
+                "image" => DOMINIO . '/' . $calculadora->img_ruta,
+                "description" => $t->_($vistaRenderizar . '-meta-description')
+            );
+            $this->view->jsonld = json_encode($doc, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
             return $this->view->pick('calculadoras/' . $vistaRenderizar);
         } else {
             $this->thrown404();

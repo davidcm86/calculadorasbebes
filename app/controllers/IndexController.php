@@ -5,6 +5,7 @@ class IndexController extends ControllerBase
 {
     public function indexAction()
     {
+        $t = $this->_getTranslation();
         $lang = $this->dispatcher->getParam('language');
         $manager = $this->modelsManager;
         $query = $manager->createQuery(
@@ -23,6 +24,14 @@ class IndexController extends ControllerBase
         $this->view->calculadoras = $calculadoras;
         $this->view->titlePagina = 'principal-meta-title';
         $this->view->descriptionMeta = 'principal-meta-description';
+        // metas jsonld
+        $doc = (object)array(
+            "@context" => "http://schema.org",
+            "@type" => "WebPage",
+            "name" => $t->_('principal-meta-title'),
+            "description" => $t->_('principal-meta-description'),
+        );
+        $this->view->jsonld = json_encode($doc, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     }
 
 }

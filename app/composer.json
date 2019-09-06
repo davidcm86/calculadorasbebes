@@ -1,6 +1,7 @@
 {
     "require": {
         "phalcon/breadcrumbs": "^1.4",
-        "mobiledetect/mobiledetectlib": "^2.8"
+        "mobiledetect/mobiledetectlib": "^2.8",
+        "digitalbazaar/json-ld": "*"
     }
 }

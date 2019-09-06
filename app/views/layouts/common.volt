@@ -3,6 +3,11 @@
         {% if titlePagina is defined %}
             <title>{{ t._('' ~ titlePagina ~ '') }}</title>
         {% endif %}
+        {% if jsonld is defined %}
+            <script type="application/ld+json">
+                {{ jsonld }}
+            </script>
+        {% endif %}
         {{ assets.outputCss('localCss') }}
         <link rel="alternate" href="{{ dominioPhp }}/{{ lang }}" hreflang="{{ language }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
