@@ -2,3 +2,4 @@ cache/
 public/node_modules/
 tmp/
 app/vendor
+app/config/config.php
