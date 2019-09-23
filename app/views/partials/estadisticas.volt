@@ -45,9 +45,11 @@
             {% endfor %}
         </div>
     </div>
-    <div class="container">
-    <div class="row aligner aligner--centerHoritzontal aligner--centerVertical">
-        <!-- TODO: solo mostrar si hay más de 2 resultados -->
-    </div>
-    </div>
 {% endif %}
+
+<div class="container">
+    <div class="row aligner aligner--centerHoritzontal aligner--centerVertical">
+        <a href="{{ rutaHome }}"  class="button">Ver todas las calculadoras</a>
+    </div>
+</div>
+
