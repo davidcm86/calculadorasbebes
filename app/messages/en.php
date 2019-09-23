@@ -21,6 +21,7 @@
         'error-fecha-anio' => 'You must select a year.',
         'embarazo-meta-description' => 'With this pregnancy calculator you will know when your baby is going to be born. You just have to enter your last day of menstruation.',
         'embarazo-meta-title' => 'Pregnancy calculator, know when my baby is going to be born',
+        'embarazo-keywords' => 'Pregnancy calculator, pregnancy, calculate pregnancy, calculate week of pregnancy, when the baby is born, know when the baby will be born',
         'calculadora-sexo-bebe' => 'Baby sex calculator',
         'calculadora-sexo-bebe-texto-1' => '
             Do you want to find out if your baby is going to be a boy or girl, boy or girl, male or female? With this simple calculator 
@@ -30,6 +31,7 @@
             it is a simple approach by the Chinese community.',
         'sexo-bebe-meta-description' => 'With this baby sex calculator, you can know if your baby is going to be a boy or girl thanks to the Chinese lunar calendar and a few facts.',
         'sexo-bebe-meta-title' => 'Calculator sex of the baby, find out if it will be boy or girl, boy or girl, male or female.',
+        'sexo-bebe-keywords' => 'Baby sex calculator, calculate baby sex, know baby sex, how to know my baby\'s sex, will be my baby boy or girl',
         'mes-concepcion-bebe' => 'Month conception baby',
         'tu-edad' => 'Your age',
         'error-tu-edad' => 'You must enter your age.',
@@ -58,6 +60,7 @@
         'color-ojos-resultado-1' => 'These are the odds of your baby\'s eye color. Blue. Brown. Green.',
         'color-ojos-bebe-meta-title' => 'Baby eye color calculator. What color will your baby\'s eyes have?',
         'color-ojos-bebe-meta-description' => 'The baby eye color calculator helps you figure out what color your baby\'s eyes will have by chance.',
+        'color-ojos-bebe-keywords' => 'baby eyes color calculator, what color will baby eyes, baby eyes, baby eyes color, how will baby eyes color',
         'probabilidad' => 'Probability',
         'marron' => 'Brown',
         'verde' => 'Green',
@@ -81,6 +84,7 @@
         'peso' => 'Weight',
         'peso-bebe-meta-title' => 'Baby weight calculator',
         'peso-bebe-meta-description' => 'Use the baby\'s weight calculator to know if your baby is at the correct weight depending on the week of pregnancy.',
+        'peso-bebe-keywords' => 'baby weight calculator, calculate baby weight, know baby weight, how much my baby will weigh, my baby\'s weight',
         'entrar' => 'Enter',
         'registrarse' => 'Register',
         'elige-pais' => 'Choose a country',
@@ -107,6 +111,7 @@
         'pelirrojo' => 'Ginger hair',
         'rubio' => 'Blond',
         'pelo-bebe-meta-title' => 'Baby hair color calculator',
-        'pelo-bebe-meta-description' => 'Calculator for baby\'s hair color. What will be the color of your baby\'s hair (brown, black, blond)?'
+        'pelo-bebe-meta-description' => 'Calculator for baby\'s hair color. What will be the color of your baby\'s hair (brown, black, blond)?',
+        'pelo-bebe-keywords' => 'baby hair color calculator, calculate baby hair color, what color will my baby\'s hair be, baby hair calculator, know baby hair color'
     ];
 ?>

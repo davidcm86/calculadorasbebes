@@ -83,6 +83,7 @@ class CalculadorasController extends ControllerBase
             $this->Breadcrumbs->add($t->_($cadenaH1Traduccion), null, ['linked' => false]);
             $this->view->descriptionMeta = $vistaRenderizar . '-meta-description';
             $this->view->titlePagina = $vistaRenderizar . '-meta-title';
+            $this->view->keywordsMeta = $t->_($vistaRenderizar . '-keywords');
             $calculadora = Calculadoras::findFirstByid($calculadoraId);
             // metas jsonld
             $doc = (object)array(

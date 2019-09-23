@@ -2476,7 +2476,7 @@ hr.style-two {
   background-color: #f2f2ff;
 }
 
-#notification-ajax-login, #notification-ajax-registro {
+#notification-ajax-login {
   display: none;
 }
 

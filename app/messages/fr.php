@@ -21,6 +21,7 @@
         'error-fecha-anio' => 'Vous devez choisir une année.',
         'embarazo-meta-description' => 'Avec cette calculatrice de grossesse, vous saurez quand votre bébé va naître. Il vous suffit d\'entrer votre dernier jour de menstruation.',
         'embarazo-meta-title' => 'Calculatrice de grossesse, sachant quand mon bébé va naître',
+        'embarazo-keywords' => 'Calculatrice de grossesse, grossesse, calcul de la grossesse, calcul de la semaine de grossesse, date de naissance du bébé, savoir quand il va naître',
         'calculadora-sexo-bebe' => 'Calculateur de sexe pour bébé',
         'calculadora-sexo-bebe-texto-1' => '
             Voulez-vous savoir si votre bébé va être un garçon ou une fille, un garçon ou une fille, homme ou femme? Avec cette simple calculatrice pour le sexe du bébé, nous pouvons vous aider. Seul
@@ -30,6 +31,7 @@
             C\'est une approche simple de la communauté chinoise.',
         'sexo-bebe-meta-description' => 'Avec cette calculatrice sexuelle pour bébé, vous pouvez savoir si votre bébé va être un garçon ou une fille grâce au calendrier lunaire chinois et à quelques faits.',
         'sexo-bebe-meta-title' => 'Calculateur de sexe pour bébé, savoir s\'il s\'agira d\'un garçon ou d\'une fille, d\'un garçon ou d\'une fille, d\'un homme ou d\'une femme.',
+        'sexo-bebe-keywords' => 'Calculateur sexuel pour bébé, calculer le sexe d\'un bébé, connaître le sexe d\'un bébé, savoir comment connaître le sexe de mon bébé, sera mon petit garçon ou ma petite fille',
         'mes-concepcion-bebe' => 'Mois de conception bébé',
         'tu-edad' => 'Ton âge',
         'error-tu-edad' => 'Vous devez entrer votre âge.',
@@ -58,6 +60,7 @@
         'color-ojos-resultado-1' => 'Ce sont les chances de la couleur des yeux de votre bébé. Bleu Marron. Vert.',
         'color-ojos-bebe-meta-title' => 'Calculateur de couleur des yeux de bébé. De quelle couleur votre bébé aura-t-il des yeux?',
         'color-ojos-bebe-meta-description' => 'Le calculateur de couleur des yeux du bébé vous aide à déterminer la couleur probable de votre bébé..',
+        'color-ojos-bebe-keywords' => 'calculateur de couleur des yeux de bébé, quelle couleur sera les yeux de bébé, yeux de bébé, couleur des yeux de bébé, comment va la couleur des yeux de bébé',
         'probabilidad' => 'Probabilité',
         'marron' => 'Marron',
         'verde' => 'Vert',
@@ -81,6 +84,7 @@
         'peso' => 'Le poids',
         'peso-bebe-meta-title' => 'Calculateur de poids bébé',
         'peso-bebe-meta-description' => 'Utilisez la calculatrice de poids pour déterminer si votre bébé a le bon poids en fonction de la semaine de la grossesse..',
+        'peso-bebe-keywords' => 'calculateur de poids de bébé, calculer le poids de bébé, connaître le poids de bébé, le poids de mon bébé, le poids de mon bébé',
         'entrar' => 'Pour entrer',
         'registrarse' => 'S\'inscrire',
         'elige-pais' => 'Choisissez un pays',
@@ -106,6 +110,7 @@
         'pelirrojo' => 'Rousse',
         'rubio' => 'Blonde',
         'pelo-bebe-meta-title' => 'Calculateur de couleur de cheveux de bébé',
-        'pelo-bebe-meta-description' => 'Calculatrice pour la couleur des cheveux de bébé. Quelle sera la couleur des cheveux de votre bébé (marron, noir, blond)?'
+        'pelo-bebe-meta-description' => 'Calculatrice pour la couleur des cheveux de bébé. Quelle sera la couleur des cheveux de votre bébé (marron, noir, blond)?',
+        'pelo-bebe-keywords' => 'Calculateur de couleur de cheveux de bébé, calculer la couleur de cheveux de bébé, de quelle couleur seront les cheveux de mon bébé, calculateur de cheveux de bébé, connaître la couleur des cheveux de bébé'
     ];
 ?>

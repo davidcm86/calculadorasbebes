@@ -21,6 +21,7 @@
         'error-fecha-anio' => 'Sie müssen ein Jahr auswählen.',
         'embarazo-meta-description' => 'Mit diesem Schwangerschaftsrechner wissen Sie, wann Ihr Baby geboren wird. Sie müssen nur Ihren letzten Tag der Menstruation eingeben.',
         'embarazo-meta-title' => 'Schwangerschaftsrechner mit dem Wissen, wann mein Baby geboren wird',
+        'embarazo-keywords' => 'Schwangerschaftsrechner, Schwangerschaft, Schwangerschaft berechnen, Schwangerschaftswoche berechnen, wann das Baby geboren wird, wissen, wann das Baby geboren wird',
         'calculadora-sexo-bebe' => 'Baby Sex Rechner',
         'calculadora-sexo-bebe-texto-1' => '
             Möchten Sie herausfinden, ob Ihr Baby ein Junge oder ein Mädchen, ein Junge oder ein Mädchen, ein Mann oder eine Frau sein wird? Mit diesem einfachen Taschenrechner für das Geschlecht des Babys können wir Ihnen helfen. Nur
@@ -30,6 +31,7 @@
             Es ist ein einfacher Ansatz der chinesischen Gemeinschaft.',
         'sexo-bebe-meta-description' => 'Mit diesem Baby-Sex-Rechner können Sie dank des chinesischen Mondkalenders und einiger Fakten feststellen, ob Ihr Baby ein Junge oder ein Mädchen sein wird.',
         'sexo-bebe-meta-title' => 'Finden Sie heraus, ob es sich um einen Jungen oder ein Mädchen, einen Jungen oder ein Mädchen, einen Mann oder eine Frau handelt.',
+        'sexo-bebe-keywords' => 'Baby-Sex-Rechner, Baby-Sex berechnen, Baby-Sex kennen, wie man das Geschlecht meines Babys kennt, wird mein Baby oder Mädchen sein',
         'mes-concepcion-bebe' => 'Monat Konzeption Baby',
         'tu-edad' => 'Dein Alter',
         'error-tu-edad' => 'Sie müssen Ihr Alter eingeben.',
@@ -58,6 +60,7 @@
         'color-ojos-resultado-1' => 'Dies sind die Wahrscheinlichkeiten für die Augenfarbe Ihres Babys. Blau Brown. Grün.',
         'color-ojos-bebe-meta-title' => 'Baby mustert Farbenrechner. Welche Farbe hat Ihr Baby Augen?',
         'color-ojos-bebe-meta-description' => 'Mit dem Augenfarbenrechner des Babys können Sie anhand der Wahrscheinlichkeit herausfinden, welche Farbe Ihr Baby haben wird.',
+        'color-ojos-bebe-keywords' => 'calculateur de couleur des yeux de bébé, quelle couleur sera les yeux de bébé, yeux de bébé, couleur des yeux de bébé, comment va la couleur des yeux de bébé',
         'probabilidad' => 'Wahrscheinlichkeit',
         'marron' => 'Brown',
         'verde' => 'Grün',
@@ -81,6 +84,7 @@
         'peso' => 'Gewicht',
         'peso-bebe-meta-title' => 'Baby-Gewichtsrechner',
         'peso-bebe-meta-description' => 'Verwenden Sie den Babygewichtsrechner, um herauszufinden, ob Ihr Baby in Abhängigkeit von der Schwangerschaftswoche das richtige Gewicht hat.',
+        'peso-bebe-keywords' => 'Baby-Gewichtsrechner, Baby-Gewicht berechnen, Baby-Gewicht wissen, wie viel mein Baby wiegen wird, das Gewicht meines Babys',
         'entrar' => 'Eintreten',
         'registrarse' => 'Melden Sie sich an',
         'elige-pais' => 'Wähle ein Land',
@@ -106,6 +110,7 @@
         'pelirrojo' => 'Rotschopf',
         'rubio' => 'Blond',
         'pelo-bebe-meta-title' => 'Babyhaarfarbenrechner',
-        'pelo-bebe-meta-description' => 'Rechner für die Haarfarbe des Babys. Welche Haarfarbe hat Ihr Baby (braun, schwarz, blond)??'
+        'pelo-bebe-meta-description' => 'Rechner für die Haarfarbe des Babys. Welche Haarfarbe hat Ihr Baby (braun, schwarz, blond)??',
+        'pelo-bebe-keywords' => 'Babyhaarfarbenrechner, Babyhaarfarbe berechnen, welche Farbe wird mein Babyhaar sein, Babyhaarfarbenrechner, Babyhaarfarbe kennen'
     ];
 ?>

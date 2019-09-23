@@ -21,6 +21,7 @@
         'error-fecha-anio' => 'Debes seleccionar un año.',
         'embarazo-meta-description' => 'Con esta calculadora del embarazo vas a saber cuando va a nacer tu bebé. Solo tienes que introducir tu último día de mestruación.',
         'embarazo-meta-title' => 'Calculadora de embarazo, saber cuándo nacerá mi bebé',
+        'embarazo-keywords' => 'Calculadora de embarazo, embarazo, calcular embarazo, calcular semana de embarazo, cuando nace el bebe, saber cuando nacerá el bebé',
         'calculadora-sexo-bebe' => 'Calculadora sexo del bebé',
         'calculadora-sexo-bebe-texto-1' => '
             ¿Quieres averiguar si tu bebé va a ser chico o chica, niño o niña, macho o hembra?. Con esta sencilla calculadora para el sexo del bebé te podemos ayudar. Solo 
@@ -30,6 +31,7 @@
             trata de una simple aproximación por parte de la comunidad china.',
         'sexo-bebe-meta-description' => 'Con esta calculadora de sexo del bebé, podrás saber si tu bebé va a ser niño o niña gracias al calendario lunar chino y a unos pocos datos.',
         'sexo-bebe-meta-title' => 'Calculadora sexo del bebé, averiguar si será niño o niña, chico o chica, macho o hembra.',
+        'sexo-bebe-keywords' => 'Calculadora sexo del bebé, calcular sexo del bebe, saber sexo bebe, como saber el sexo de mi bebe, sera mi bebe niño o niña',
         'mes-concepcion-bebe' => 'Mes concepción bebé',
         'tu-edad' => 'Tu edad',
         'error-tu-edad' => 'Debes introducir tu edad.',
@@ -58,6 +60,7 @@
         'color-ojos-resultado-1' => 'Estas son las probabilidades del color de ojos de tu bebé. Azúl. Marrón. Verde.',
         'color-ojos-bebe-meta-title' => 'Calculadora de color de ojos del bebé. ¿De qué color tendrá los ojos tu bebé?',
         'color-ojos-bebe-meta-description' => 'La calculadora de color de ojos del bebé te ayuda a averiguar de qué color tendrá los ojos tu bebé mediante la probabilidad.',
+        'color-ojos-bebe-keywords' => 'calculadora color ojos bebe, de que color sera ojos bebe, ojos bebe, color ojos bebe, como sera color ojos bebe',
         'probabilidad' => 'Probabilidad',
         'marron' => 'Marrón',
         'verde' => 'Verde',
@@ -81,6 +84,7 @@
         'peso' => 'Peso',
         'peso-bebe-meta-title' => 'Calculadora peso del bebé',
         'peso-bebe-meta-description' => 'Utiliza la calculadora de peso del bebé para saber si tu bebé está en el peso correcto dependiendo de la semana de embarazo.',
+        'peso-bebe-keywords' => 'calculadora peso bebe, calcular peso bebe, saber peso bebe, cuanto pesará mi bebe, peso de mi bebe',
         'entrar' => 'Entrar',
         'registrarse' => 'Registrarse',
         'elige-pais' => 'Elige un país',
@@ -106,6 +110,7 @@
         'pelirrojo' => 'Pelirrojo',
         'rubio' => 'Rubio',
         'pelo-bebe-meta-title' => 'Calculadora del color de pelo del bebé',
-        'pelo-bebe-meta-description' => 'Calculadora para el color de pelo del bebé. ¿Cuál será el color de pelo de tu bebé (castaño, negro, rubio)?'
+        'pelo-bebe-meta-description' => 'Calculadora para el color de pelo del bebé. ¿Cuál será el color de pelo de tu bebé (castaño, negro, rubio)?',
+        'pelo-bebe-keywords' => 'calculadora color pelo bebe, calcular color pelo bebe, que color sera pelo de mi bebe, calculadora pelo bebe, saber color pelo bebe'
     ];
 ?>

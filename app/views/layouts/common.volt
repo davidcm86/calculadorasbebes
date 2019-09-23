@@ -14,6 +14,9 @@
         {% if descriptionMeta is defined %}
             <meta name="description" content="{{ t._('' ~ descriptionMeta ~ '') }}">
         {% endif %}
+        {% if keywordsMeta is defined %}
+            <meta name="keywords" content="{{ keywordsMeta }}">
+        {% endif %}
         <link rel="icon" type="image/png" sizes="16x16" href="{{ url('img/comun/favicon-16x16.png') }}">
         {% include 'partials/analytics.volt' %}
     </head>
