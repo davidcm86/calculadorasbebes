@@ -111,6 +111,7 @@
         'rubio' => 'Rubio',
         'pelo-bebe-meta-title' => 'Calculadora del color de pelo del bebé',
         'pelo-bebe-meta-description' => 'Calculadora para el color de pelo del bebé. ¿Cuál será el color de pelo de tu bebé (castaño, negro, rubio)?',
-        'pelo-bebe-keywords' => 'calculadora color pelo bebe, calcular color pelo bebe, que color sera pelo de mi bebe, calculadora pelo bebe, saber color pelo bebe'
+        'pelo-bebe-keywords' => 'calculadora color pelo bebe, calcular color pelo bebe, que color sera pelo de mi bebe, calculadora pelo bebe, saber color pelo bebe',
+        'ver-todas-calculadoras' => 'Ver todas las calculadoras'
     ];
 ?>

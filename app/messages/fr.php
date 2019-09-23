@@ -111,6 +111,7 @@
         'rubio' => 'Blonde',
         'pelo-bebe-meta-title' => 'Calculateur de couleur de cheveux de bébé',
         'pelo-bebe-meta-description' => 'Calculatrice pour la couleur des cheveux de bébé. Quelle sera la couleur des cheveux de votre bébé (marron, noir, blond)?',
-        'pelo-bebe-keywords' => 'Calculateur de couleur de cheveux de bébé, calculer la couleur de cheveux de bébé, de quelle couleur seront les cheveux de mon bébé, calculateur de cheveux de bébé, connaître la couleur des cheveux de bébé'
+        'pelo-bebe-keywords' => 'Calculateur de couleur de cheveux de bébé, calculer la couleur de cheveux de bébé, de quelle couleur seront les cheveux de mon bébé, calculateur de cheveux de bébé, connaître la couleur des cheveux de bébé',
+        'ver-todas-calculadoras' => 'Voir toutes les calculatrices'
     ];
 ?>

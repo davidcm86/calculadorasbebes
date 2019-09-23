@@ -111,6 +111,7 @@
         'rubio' => 'Blond',
         'pelo-bebe-meta-title' => 'Babyhaarfarbenrechner',
         'pelo-bebe-meta-description' => 'Rechner für die Haarfarbe des Babys. Welche Haarfarbe hat Ihr Baby (braun, schwarz, blond)??',
-        'pelo-bebe-keywords' => 'Babyhaarfarbenrechner, Babyhaarfarbe berechnen, welche Farbe wird mein Babyhaar sein, Babyhaarfarbenrechner, Babyhaarfarbe kennen'
+        'pelo-bebe-keywords' => 'Babyhaarfarbenrechner, Babyhaarfarbe berechnen, welche Farbe wird mein Babyhaar sein, Babyhaarfarbenrechner, Babyhaarfarbe kennen',
+        'ver-todas-calculadoras' => 'Alle Taschenrechner anzeigen'
     ];
 ?>

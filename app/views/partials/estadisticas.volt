@@ -49,7 +49,7 @@
 
 <div class="container">
     <div class="row aligner aligner--centerHoritzontal aligner--centerVertical">
-        <a href="{{ rutaHome }}"  class="button">Ver todas las calculadoras</a>
+        <a href="{{ rutaHome }}"  class="button">{{ t._('ver-todas-calculadoras') }}</a>
     </div>
 </div>
 

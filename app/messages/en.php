@@ -112,6 +112,7 @@
         'rubio' => 'Blond',
         'pelo-bebe-meta-title' => 'Baby hair color calculator',
         'pelo-bebe-meta-description' => 'Calculator for baby\'s hair color. What will be the color of your baby\'s hair (brown, black, blond)?',
-        'pelo-bebe-keywords' => 'baby hair color calculator, calculate baby hair color, what color will my baby\'s hair be, baby hair calculator, know baby hair color'
+        'pelo-bebe-keywords' => 'baby hair color calculator, calculate baby hair color, what color will my baby\'s hair be, baby hair calculator, know baby hair color',
+        'ver-todas-calculadoras' => 'See all calculators'
     ];
 ?>
